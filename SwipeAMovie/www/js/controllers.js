@@ -156,11 +156,13 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('votingMoviesCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('votingMoviesCtrl', ['$scope', '$state', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $state, $stateParams) {
     var vm = this;
+
+    
 
 }])
 
@@ -199,7 +201,35 @@ function ($scope, $stateParams) {
                 preferedGenres.push(genres[g]);
             }
         }
-        $state.go('votingMovies',{"preferedGenres":preferedGenres, "userID":userID, "roomID":roomID})
+
+        var getMovies = new XMLHttpRequest();
+        getMovies.open('POST', 'http://'+serverName+'/room/'+$stateParams['roomID']+'/movies', true);
+        getMovies.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        var movieList = null;
+        getMovies.onload = function(){
+            try {
+                if (getMovies.status >= 200 && getMovies.status < 400) {
+                    movieList = JSON.parse(getMovies.responseText);
+                }else{
+                    console.error("Oh Noes! Something went wrong in the server\n"+getMovies.responseText);
+                    alert("Oh Noes! Something went wrong in the server\n");
+                }
+            }catch(e){
+                console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+                alert("Oh Noes! Something went wrong in the client\n");
+            }
+        };
+
+        getMovies.onerror = function() {
+            console.error("Oh Noes! Something went wrong in the server\n"+getMovies.responseText);
+            alert("Oh Noes! Something went wrong in the server\n");
+        };
+
+        getMovies.send(JSON.stringify({ "userId": userID,
+            "categories": preferedGenres
+        }, null, 4));
+
+        $state.go('votingMovies',{"movieList":movieList, "userID":$stateParams['userID'], "roomID":$stateParams['roomID']})
     }
 
 }])
