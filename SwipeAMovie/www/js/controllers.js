@@ -26,7 +26,7 @@ function ($scope, $stateParams) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
-
+    var vm = this;
 
 }])
 
@@ -42,7 +42,20 @@ function ($scope, $stateParams) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
+    var vm = this;
+    
+    vm.selectedGenres = [false, false, false, false, false, false, false, false];
+    
+    $scope.remainingGenres = 5;
+    $scope.onMouseClick = function (index) {
+        var newValue = !vm.selectedGenres[index];
+        if (newValue && $scope.remainingGenres > 0 || !newValue && $scope.remainingGenres <= 5)
+            vm.selectedGenres[index] = newValue;
 
+        $scope.remainingGenres = 5;
+        for (var i = 0; i < vm.selectedGenres.length; i++)
+            if (vm.selectedGenres[i]) $scope.remainingGenres --;
+    }
 
 }])
 

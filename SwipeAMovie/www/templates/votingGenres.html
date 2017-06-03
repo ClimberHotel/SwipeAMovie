@@ -1,19 +1,21 @@
 <ion-view title="voting/genres" hide-nav-bar="true">
     <ion-content padding="true" class="manual-ios-statusbar-padding">
-        <h4 style="text-align: center;">Pick 5 Movie Genres</h4>
+        <h4 style="color: white; text-align: center;">{{ remainingGenres > 0 ? 'Pick ' + remainingGenres + ' Movie Genres' : 'All set! Let\'s go!' }}</h4>
 
         <div>
             <div class="cz-row" style="margin: 0 -5px;">
-                <div class="cz-movie-genre">
+                <div class="cz-movie-genre" ng-click="onMouseClick(0)" ng-class="{ 'selected': vm.selectedGenres[0] }">
                     <div class="background" style="background-image: url('img/genre-action.jpg')"></div>
-                    <div class="overlay"></div>
+                    <div class="overlay"></div> 
+                    <span class="icon ion-checkmark" ng-show="vm.selectedGenres[0]"></span>
                     <div class="content">
                         <h3>Action</h3>
                     </div>
                 </div>
-                <div class="cz-movie-genre">
+                <div class="cz-movie-genre" ng-click="onMouseClick(1)" ng-class="{ 'selected': vm.selectedGenres[1] }">
                     <div class="background" style="background-image: url('img/genre-comedy.jpg')"></div>
-                    <div class="overlay"></div>
+                    <div class="overlay"></div> 
+                    <span class="icon ion-checkmark" ng-show="vm.selectedGenres[1]"></span>
                     <div class="content">
                         <h3>Comedy</h3>
                     </div>
@@ -21,16 +23,18 @@
             </div>
 
             <div class="cz-row" style="margin: 0 -5px;">
-                <div class="cz-movie-genre">
+                <div class="cz-movie-genre" ng-click="onMouseClick(2)" ng-class="{ 'selected': vm.selectedGenres[2] }">
                     <div class="background" style="background-image: url('img/genre-drama.jpg')"></div>
                     <div class="overlay"></div>
+                    <span class="icon ion-checkmark" ng-show="vm.selectedGenres[2]"></span>
                     <div class="content">
                         <h3>Drama</h3>
                     </div>
                 </div>
-                <div class="cz-movie-genre">
+                <div class="cz-movie-genre" ng-click="onMouseClick(3)" ng-class="{ 'selected': vm.selectedGenres[3] }">
                     <div class="background" style="background-image: url('img/genre-family.jpg')"></div>
-                    <div class="overlay"></div>
+                    <div class="overlay"></div> 
+                    <span class="icon ion-checkmark" ng-show="vm.selectedGenres[3]"></span>
                     <div class="content">
                         <h3>Family</h3>
                     </div>
@@ -38,16 +42,18 @@
             </div>
 
             <div class="cz-row" style="margin: 0 -5px;">
-                <div class="cz-movie-genre">
+                <div class="cz-movie-genre" ng-click="onMouseClick(4)" ng-class="{ 'selected': vm.selectedGenres[4] }">
                     <div class="background" style="background-image: url('img/genre-horror.jpg')"></div>
                     <div class="overlay"></div>
+                    <span class="icon ion-checkmark" ng-show="vm.selectedGenres[4]"></span>
                     <div class="content">
                         <h3>Horror</h3>
                     </div>
                 </div>
-                <div class="cz-movie-genre">
+                <div class="cz-movie-genre" ng-click="onMouseClick(5)" ng-class="{ 'selected': vm.selectedGenres[5] }">
                     <div class="background" style="background-image: url('img/genre-romance.jpg')"></div>
                     <div class="overlay"></div>
+                    <span class="icon ion-checkmark" ng-show="vm.selectedGenres[5]"></span>
                     <div class="content">
                         <h3>Romance</h3>
                     </div>
@@ -55,16 +61,18 @@
             </div>
 
             <div class="cz-row" style="margin: 0 -5px;">
-                <div class="cz-movie-genre">
+                <div class="cz-movie-genre" ng-click="onMouseClick(6)" ng-class="{ 'selected': vm.selectedGenres[6] }">
                     <div class="background" style="background-image: url('img/genre-sci-fi.jpg')"></div>
                     <div class="overlay"></div>
+                    <span class="icon ion-checkmark" ng-show="vm.selectedGenres[6]"></span>
                     <div class="content">
                         <h3>Sci-Fi</h3>
                     </div>
                 </div>
-                <div class="cz-movie-genre">
+                <div class="cz-movie-genre" ng-click="onMouseClick(7)" ng-class="{ 'selected': vm.selectedGenres[7] }">
                     <div class="background" style="background-image: url('img/genre-thriller.jpg')"></div>
                     <div class="overlay"></div>
+                    <span class="icon ion-checkmark" ng-show="vm.selectedGenres[7]"></span>
                     <div class="content">
                         <h3>Thriller</h3>
                     </div>
@@ -73,4 +81,9 @@
         </div>
 
     </ion-content>
+
+    <div class="cz-footer" ng-class="{ 'ready': remainingGenres == 0 }">
+        <input class="button button-positive button-block" type="submit" form="form" value="Pick a Movie" />
+    </div>
+
 </ion-view>
