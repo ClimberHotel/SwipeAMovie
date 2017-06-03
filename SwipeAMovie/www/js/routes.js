@@ -7,7 +7,7 @@ angular.module('app.routes', [])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
+
 
       .state('createAnEvent', {
     url: '/events/new',
@@ -52,7 +52,7 @@ angular.module('app.routes', [])
   })
 
   .state('resultsCountdownAdmin', {
-    url: '/page9',
+    url: '/events/{id}/result/status',
     templateUrl: 'templates/resultsCountdownAdmin.html',
     controller: 'resultsCountdownAdminCtrl',
     controllerAs: 'vm'
