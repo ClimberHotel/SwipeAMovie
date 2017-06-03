@@ -314,6 +314,7 @@ function ($scope, $state, $stateParams) {
         card.style.transform = 'translateX(' + $scope.touchProgress * startPosition.width + 'px)'; // No idea why i need to subtract 42
         card.style.transform += 'translateY(' + -Math.abs($scope.touchProgress * 48) + 'px)';
         card.style.transform += 'rotateZ(' + $scope.touchProgress * 15 + 'deg)';
+        card.style['-webkit-transform'] = card.style.transform;
     }
 
 }])
