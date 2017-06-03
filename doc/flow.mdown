@@ -5,9 +5,9 @@
 ### FE Screen #1 (create event)
 1. Fill form data (Title, Description, Deadline)
 
-2. Get UUID from BE
+2. Get userId from BE
 
-3. Get Share Link from BE
+3. Get Share Link roomId from BE
 
 4. Invite friends
 
@@ -24,17 +24,15 @@
 
 2. Get Movies List (from SKY API)
   - filter movies with our hardcoded categories choice
-  - insert movies into movie table, with category :: use sky ID for movie (movieId)
+  - insert into movie table, with category
+  - insert 5 random movies from each category into movie table of the room, with category :: use sky ID for movie (movieId)
   movieId, title, description, category, link poster, link to trailer
 
-3. generate list of movies for user based on selected categories with order index
-    - store on RoomMovieUserOrder
-    - roomId, userId, category, movieId, index
-
-4. Send List of movies (bulk of #10) to FE for user to swipe
+3. generate list of movies for user based on selected categories with random order. have index to know the order to show
+    - roomId, userId, category, movieId
 
 ### FE Screen #3 (swipe movies)
-1. Show list of movies (bulk of #10)
+1. Show list of movies (do random order on list)
 
 2. Show first movie in list not seen
 
@@ -42,7 +40,7 @@
 
 4. Send to BE the vote (roomId, userId, category, movieId, vote)
 
-5. Mask movie as voted
+5. Masr movie as voted
 
 6. Jump to 1 until user finishes or no more movies
 
