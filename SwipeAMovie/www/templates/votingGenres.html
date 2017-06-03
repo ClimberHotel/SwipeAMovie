@@ -1,4 +1,4 @@
-<ion-view title="voting/genres" hide-nav-bar="true">
+<ion-view title="Pick Movie Genres" hide-nav-bar="true">
     <ion-content padding="true" class="manual-ios-statusbar-padding">
         <h4 style="color: white; text-align: center;">{{ remainingGenres > 0 ? 'Pick ' + remainingGenres + ' Movie Genres' : 'All set! Let\'s go!' }}</h4>
 
@@ -6,7 +6,7 @@
             <div class="cz-row" style="margin: 0 -5px;">
                 <div class="cz-movie-genre" ng-click="onMouseClick(0)" ng-class="{ 'selected': vm.selectedGenres[0] }">
                     <div class="background" style="background-image: url('img/genre-action.jpg')"></div>
-                    <div class="overlay"></div> 
+                    <div class="overlay"></div>
                     <span class="icon ion-checkmark" ng-show="vm.selectedGenres[0]"></span>
                     <div class="content">
                         <h3>Action</h3>
@@ -14,7 +14,7 @@
                 </div>
                 <div class="cz-movie-genre" ng-click="onMouseClick(1)" ng-class="{ 'selected': vm.selectedGenres[1] }">
                     <div class="background" style="background-image: url('img/genre-comedy.jpg')"></div>
-                    <div class="overlay"></div> 
+                    <div class="overlay"></div>
                     <span class="icon ion-checkmark" ng-show="vm.selectedGenres[1]"></span>
                     <div class="content">
                         <h3>Comedy</h3>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="cz-movie-genre" ng-click="onMouseClick(3)" ng-class="{ 'selected': vm.selectedGenres[3] }">
                     <div class="background" style="background-image: url('img/genre-family.jpg')"></div>
-                    <div class="overlay"></div> 
+                    <div class="overlay"></div>
                     <span class="icon ion-checkmark" ng-show="vm.selectedGenres[3]"></span>
                     <div class="content">
                         <h3>Family</h3>
