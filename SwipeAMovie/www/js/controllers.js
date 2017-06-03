@@ -150,12 +150,36 @@ function ($scope, $state, $stateParams, $cordovaSocialSharing) {
     }
 }])
 
-.controller('invitationReceivedCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('invitationReceivedCtrl', ['$scope', '$state', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $state, $stateParams) {
+    var vm = this;
+    var roomId = $stateParams['roomId'];
 
+    var getRoom = new XMLHttpRequest();
+    getRoom.open('GET', 'http://'+serverName+'/room/'+roomId, true);
 
+    getRoom.onload = function() {
+        try{
+            if (getRoom.status >= 200 && getRoom.status < 400) {
+                vm.room = JSON.parse(getRoom.responseText);
+            } else {
+                console.error("Oh Noes! Something went wrong in the server\n"+getRoom.responseText);
+                alert("Oh Noes! Something went wrong in the server");
+            }
+        } catch(e) {
+            console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+            alert("Oh Noes! Something went wrong in the client");
+        }
+    };
+
+    getRoom.onerror = function() {
+        console.error("Oh Noes! Something went wrong in the server\n"+getRoom.responseText);
+        alert("Oh Noes! Something went wrong in the server");
+    };
+
+    getRoom.send();
 }])
 
 
