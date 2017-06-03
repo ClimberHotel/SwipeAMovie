@@ -205,7 +205,8 @@ function ($scope, $state, $stateParams) {
                             console.log(data)
                             userID = data["userId"];
                             console.log(userID)
-                            var d = new Date(vm.entity.date.getTime() + 172800000);
+                            console.log(vm.room['time'])
+                            var d = new Date(vm.room['time'] + 172800000);
                             var expires = "expires="+ d.toUTCString();
                             console.log(expires)
                             document.cookie = "__SAMUSERID__=" + userID + ";" + expires + ";path=/";
