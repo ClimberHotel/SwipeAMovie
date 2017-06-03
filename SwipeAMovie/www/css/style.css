@@ -15,3 +15,73 @@
 .item-stacked-label.error {
     border: 1px solid red;
 }
+
+/*
+===================================================================================
+    Pick a Genre
+===================================================================================
+*/
+.cz-movie-genre {
+    position: relative;
+    width: 50%;
+    margin: 5px;
+    overflow: hidden;
+}
+.cz-movie-genre:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+.cz-movie-genre > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.cz-movie-genre .content > * {
+    color: white;
+    text-align: center;
+}
+
+.cz-movie-genre .overlay,
+.cz-movie-genre .background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.cz-movie-genre .background {
+    filter: blur(2px);
+}
+.cz-row:nth-child(1) .cz-movie-genre:nth-child(1) .overlay {
+    background-image: linear-gradient(to bottom right,#fcb045 20%,#fd1d1d 80%);
+    opacity: 0.75;
+}
+.cz-row:nth-child(1) .cz-movie-genre:nth-child(2) .overlay,
+.cz-row:nth-child(2) .cz-movie-genre:nth-child(1) .overlay {
+    background-image: linear-gradient(to bottom right,#fd1d1d 20%,#E30073 70%);
+    opacity: 0.75;
+}
+.cz-row:nth-child(2) .cz-movie-genre:nth-child(2) .overlay,
+.cz-row:nth-child(3) .cz-movie-genre:nth-child(1) .overlay {
+    background-image: linear-gradient(to bottom right,#E30073 20%,#833ab4 70%);
+    opacity: 0.75;
+}
+
+.cz-row:nth-child(3) .cz-movie-genre:nth-child(2) .overlay,
+.cz-row:nth-child(4) .cz-movie-genre:nth-child(1) .overlay {
+    background-image: linear-gradient(to bottom right,#833ab4 20%,#1F2185 70%);
+    opacity: 0.75;
+}
+
+.cz-row:nth-child(4) .cz-movie-genre:nth-child(2) .overlay {
+    background-image: linear-gradient(to bottom right,#1F2185 20%,#0083CC 70%);
+    opacity: 0.75;
+}
+
+
