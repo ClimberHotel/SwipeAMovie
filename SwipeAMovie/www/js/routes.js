@@ -29,7 +29,7 @@ angular.module('app.routes', [])
                 controller: 'votingMoviesCtrl',
                 controllerAs: 'vm',
                 params:{
-                    "movieList":[], "userID":-1, "roomID":-1
+                    "movieList":[],"movieListIndex":0, "userID":-1, "roomID":-1
                 }
             })
 
@@ -38,7 +38,10 @@ angular.module('app.routes', [])
                 templateUrl: 'templates/votingMoviesDetails.html',
                 controller: 'votingMoviesDetailsCtrl',
                 controllerAs: 'vm',
-                parent: 'votingMovies'
+                parent: 'votingMovies',
+                params:{
+                    "movieList":[],"movieListIndex":0, "userID":-1, "roomID":-1
+                }
             })
 
             .state('votingGenres', {

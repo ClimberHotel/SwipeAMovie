@@ -7,18 +7,16 @@
             </div>
             <div>
                 <h3 style="color: white;">
-                    Resident Evil: The Final Chapter
+                    {{vm.title ? vm.title : 'Resident Evil: The Final Chapter'}}
                 </h3>
                 <h5 style="font-weight: normal; color: gray;">
-                    2017 | 1h 42mins | +15
+                    {{vm.year ? vm.year : '2017'}} | {{vm.duration ? vm.duration + 'm' : '1h 42mins'}} | {{vm.ratings ? '+' + vm.ratings : '+15'}}
                 </h5>
 
                 <p></p>
                 <h4 style="color: white;">Sinopse</h4>
                 <div style="font-weight: normal; color: gray;">
-                    Era uma vez cenas...
-                    <br>Depois batatas com cebolas na panela de pressão a fazerem sauna.
-                    <br>Os alhos a fazer cenas das cenas no dia das cenas.
+                    {{ vm.synopsis ? vm.synopsis : 'Era uma vez cenas... <br>Depois batatas com cebolas na panela de pressão a fazerem sauna. <br>Os alhos a fazer cenas das cenas no dia das cenas.'}}
                 </div>
                 <p></p>
 
@@ -26,7 +24,7 @@
                 <h4 style="color: white;">Trailer</h4>
                 <p></p>
             </div>
-            <div ng-init="videourl_video1=&quot;https://www.youtube.com/embed/lTLTs2ZA2JQ?rel=0&amp;showinfo=0&quot;" style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;">
+            <div ng-init="videourl_video1=&quot;"+{{vm.trailerUrl ? vm.trailerUrl : 'https://www.youtube.com/embed/lTLTs2ZA2JQ'}}+"?rel=0&amp+;showinfo=0&quot;" style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;">
                 <iframe src="{{videourl_video1}}" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
             </div>
             <div>
@@ -42,9 +40,9 @@
             </ion-slides>
 
             <div class="button-bar">
-                <button style="font-size:0px;border-radius:0px 0px 0px 0px;" class="button button-positive button-block icon ion-thumbsdown"></button>
-                <button class="button button-positive button-block icon ion-checkmark"></button>
-                <button class="button button-positive button-block icon ion-thumbsup"></button>
+                <button style="font-size:0px;border-radius:0px 0px 0px 0px;" class="button button-positive button-block icon ion-thumbsdown" ng-click="vm.dislike()"></button>
+                <button class="button button-positive button-block icon ion-checkmark" ng-click="vm.finish()"></button>
+                <button class="button button-positive button-block icon ion-thumbsup" ng-click="vm.like()"></button>
             </div>
         </div>
     </ion-content>
