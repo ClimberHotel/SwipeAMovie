@@ -144,13 +144,13 @@ votes.addVote = function(userId,roomId,movieId,like,dislike,callback){
     });
 }
 
-votes.getTopMovie = function(roomID, callback){
+votes.getTopMovie = function(roomId, callback){
     db.serialize(function(){
-        db.run( "SELECT m.* FROM "
+        db.get( "SELECT m.* FROM "
                 +"(   SELECT movieId, SUM(like)-SUM(dislike) AS score "
                 +"    FROM votes WHERE roomId = ? GROUP BY movieId "
                 +"    ORDER BY score DESC, movieId LIMIT 1) t "
-                +"INNER JOIN movies m ON t.movieId = m.movieId"
+                +"INNER JOIN movies m ON t.movieId = m.uid"
             ,roomId,callback
         );
     });

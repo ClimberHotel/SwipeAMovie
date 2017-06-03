@@ -149,3 +149,16 @@ exports.roomMovies = function(req,res){
     });
 
 }
+
+exports.results = function(req,res){
+    var roomId = req.params['uid'];
+    new models.Vote().getTopMovie(roomId, function(err,result){
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }else{
+            console.log(result);
+            return res.sendStatus(200);
+        }
+    });
+}
