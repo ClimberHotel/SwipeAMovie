@@ -302,7 +302,7 @@ function ($scope, $stateParams) {
 
     vm.submit = function(){
         preferedGenres = [];
-        for(g in selectedGenres){
+        for(g in vm.selectedGenres){
             if(vm.selectedGenres[g]){
                 preferedGenres.push(genres[g]);
             }
