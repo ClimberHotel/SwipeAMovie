@@ -3,7 +3,9 @@
 # What really grinds my gears?
 
 ## The problem
+
 ![SKY](https://corporate.sky.com/file.axd?pointerid=8d70e59f38a849d8bb4bca854ca1c7dd)
+
 When I spend 3h to choose which movie to watch with my friends.
 
 
@@ -49,7 +51,7 @@ When we are hosting a movie session at home during the swiping stage, you will h
 
 ## Who are we
 
-Ricardo Tavares -
-Micael Batista -
-Fernando Marques -
-Joao Pedro -
+- Ricardo Tavares - The pink gradient Front End guy
+- Micael Batista - The
+- Fernando Marques -
+- Joao Pedro -
