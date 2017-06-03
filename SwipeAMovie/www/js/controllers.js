@@ -11,7 +11,7 @@ angular.module('app.controllers', [])
 function ($scope, $state, $stateParams, $cordovaSocialSharing) {
     var vm = this;
     $scope.shareLink=function(roomId){
-      $cordovaSocialSharing.share('Movie session at my place', 'Swipe A Movie', null, 'http://192.168.0.101:8100/#/events?roomId='+(roomId||$stateParams.roomID));
+      $cordovaSocialSharing.share('Movie session at my place', 'Swipe A Movie', null, 'http://192.168.0.101:8100/#/events/'+(roomId||$stateParams.roomID)+'/invitation');
     };
 
     vm.entity = {
@@ -71,7 +71,11 @@ function ($scope, $state, $stateParams, $cordovaSocialSharing) {
                                 console.error("Oh Noes! Something went wrong in the server\n"+setupRoom.responseText);
                                 alert("Oh Noes! Something went wrong in the server");
                             } else {
-                                $scope.shareLink(roomID);
+                                //try {
+                                    $scope.shareLink(roomID);
+                                //} catch (e) {
+                                //    copy('http://192.168.0.101:8100/#/events/'+roomId+'/invitation');
+                                //}
                                 $state.go('votingGenres', {"userID": userID, "roomID": roomID});
                             }
                         }
@@ -150,12 +154,83 @@ function ($scope, $state, $stateParams, $cordovaSocialSharing) {
     }
 }])
 
-.controller('invitationReceivedCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('invitationReceivedCtrl', ['$scope', '$state', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $state, $stateParams) {
+    var vm = this;
+    var roomId = $stateParams['roomId'];
 
+    var getRoom = new XMLHttpRequest();
+    getRoom.open('GET', 'http://'+serverName+'/room/'+roomId, true);
 
+    getRoom.onload = function() {
+        try{
+            if (getRoom.status >= 200 && getRoom.status < 400) {
+                vm.room = JSON.parse(getRoom.responseText);
+            } else {
+                console.error("Oh Noes! Something went wrong in the server\n"+getRoom.responseText);
+                alert("Oh Noes! Something went wrong in the server");
+            }
+        } catch(e) {
+            console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+            alert("Oh Noes! Something went wrong in the client");
+        }
+    };
+
+    getRoom.onerror = function() {
+        console.error("Oh Noes! Something went wrong in the server\n"+getRoom.responseText);
+        alert("Oh Noes! Something went wrong in the server");
+    };
+
+    getRoom.send();
+
+    vm.submit = function(){
+        var name = "__SAMUSERID__=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) != 0) {
+                var getUser = new XMLHttpRequest();
+                getUser.open('GET', 'http://'+serverName+'/create_user', true);
+
+                getUser.onload = function() {
+                    try{
+                        if (getUser.status >= 200 && getUser.status < 400) {
+                            var data = JSON.parse(getUser.responseText);
+                            console.log(data)
+                            userID = data["userId"];
+                            console.log(userID)
+                            var d = new Date(vm.entity.date.getTime() + 172800000);
+                            var expires = "expires="+ d.toUTCString();
+                            console.log(expires)
+                            document.cookie = "__SAMUSERID__=" + userID + ";" + expires + ";path=/";
+                            console.log(document.cookie);
+
+                            $state.go('votingGenres', {"userID": userID, "roomID": roomId})
+                        } else {
+                            console.error("Oh Noes! Something went wrong in the server\n"+getUser.responseText);
+                            alert("Oh Noes! Something went wrong in the server");
+                        }
+                    } catch(e) {
+                        console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+                        alert("Oh Noes! Something went wrong in the client");
+                    }
+                };
+
+                getUser.onerror = function() {
+                    console.error("Oh Noes! Something went wrong in the server\n"+getUser.responseText);
+                    alert("Oh Noes! Something went wrong in the server");
+                };
+
+                getUser.send();
+            }
+        }
+    };
 }])
 
 
