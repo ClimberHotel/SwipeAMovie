@@ -9,20 +9,20 @@
             <ion-list>
                 <div class="item item-body" id="invitationReceived-list-item-container5">
                     <div class="show-list-numbers-and-dots">
-                        <p style="margin-top:0px;color:#000000;font-size:16px;">Mary's Movie Night</p>
+                        <p style="margin-top:0px;color:#000000;font-size:16px;">{{vm.room['title'] ? vm.room['title'] : 'Mary's Movie Night'}}</p>
                     </div>
                     <div class="show-list-numbers-and-dots">
-                        <p style="margin-top:0px;color:#8A8A8A;">June 30 at 21:00</p>
+                        <p style="margin-top:0px;color:#8A8A8A;">{{ vm.room['date'] ? vm.room['date'] + 'at' + vm.room['time'] :  'June 30 at 21:00'}}</p>
                     </div>
                     <div class="show-list-numbers-and-dots">
+                        <p style="margin-top:0px;color:#000000;">{{ vm.room['description'] ? m.room['description'] : 'Description'}}</p>
+                    </div>
+                    <!--<div class="show-list-numbers-and-dots">
                         <p style="margin-top:0px;color:#000000;">Description</p>
                     </div>
                     <div class="show-list-numbers-and-dots">
                         <p style="margin-top:0px;color:#000000;">Description</p>
-                    </div>
-                    <div class="show-list-numbers-and-dots">
-                        <p style="margin-top:0px;color:#000000;">Description</p>
-                    </div>
+                    </div>-->
                 </div>
             </ion-list>
         </div>

@@ -180,6 +180,53 @@ function ($scope, $state, $stateParams) {
     };
 
     getRoom.send();
+
+    vm.submit = function(){
+        var name = "__SAMUSERID__=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) != 0) {
+                var getUser = new XMLHttpRequest();
+                getUser.open('GET', 'http://'+serverName+'/create_user', true);
+
+                getUser.onload = function() {
+                    try{
+                        if (getUser.status >= 200 && getUser.status < 400) {
+                            var data = JSON.parse(getUser.responseText);
+                            console.log(data)
+                            userID = data["userId"];
+                            console.log(userID)
+                            var d = new Date(vm.entity.date.getTime() + 172800000);
+                            var expires = "expires="+ d.toUTCString();
+                            console.log(expires)
+                            document.cookie = "__SAMUSERID__=" + userID + ";" + expires + ";path=/";
+                            console.log(document.cookie);
+
+                            $state.go('votingGenres', {"userID": userID, "roomID": roomId})
+                        } else {
+                            console.error("Oh Noes! Something went wrong in the server\n"+getUser.responseText);
+                            alert("Oh Noes! Something went wrong in the server");
+                        }
+                    } catch(e) {
+                        console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+                        alert("Oh Noes! Something went wrong in the client");
+                    }
+                };
+
+                getUser.onerror = function() {
+                    console.error("Oh Noes! Something went wrong in the server\n"+getUser.responseText);
+                    alert("Oh Noes! Something went wrong in the server");
+                };
+
+                getUser.send();
+            }
+        }
+    };
 }])
 
 
