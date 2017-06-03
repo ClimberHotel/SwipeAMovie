@@ -144,6 +144,18 @@ votes.addVote = function(userId,roomId,movieId,like,dislike,callback){
     });
 }
 
+votes.getTopMovie = function(roomID, callback){
+    db.serialize(function(){
+        db.run( "SELECT m.* FROM "
+                +"(   SELECT movieId, SUM(like)-SUM(dislike) AS score "
+                +"    FROM votes WHERE roomId = ? GROUP BY movieId "
+                +"    ORDER BY score DESC, movieId LIMIT 1) t "
+                +"INNER JOIN movies m ON t.movieId = m.movieId"
+            ,roomId,callback
+        );
+    });
+}
+
 users.addUser = function(callback){
     var result = null;
     db.serialize(function(){
@@ -194,5 +206,7 @@ movies.getInfo = function(movieId,callback){
             db.get("SELECT * FROM movies WHERE uid=?",movieId,callback);
     });
 }
+
+
 
 module.exports = {Room,Movie,Vote,User,RoomMovies};
