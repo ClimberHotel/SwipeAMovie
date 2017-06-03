@@ -49,6 +49,12 @@ The recomendations will be more close to the users mood and likings.
 When we are hosting a movie session at home during the swiping stage, you will have the opportunity to say like to what you would like to have, like popcorns, beear, some snacks...
 
 
+## The Master Plan
+
+[For the Master Is Here](master-flow.mdown)
+[For the Cliente Is Here](client-flow.mdown)
+
+
 ## Who are we
 
 - Ricardo Tavares - The pink gradient Front End guy
