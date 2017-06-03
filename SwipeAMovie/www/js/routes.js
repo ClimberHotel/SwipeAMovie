@@ -27,7 +27,10 @@ angular.module('app.routes', [])
                 url: '/events/{event}/voting/movies',
                 templateUrl: 'templates/votingMovies.html',
                 controller: 'votingMoviesCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                params:{
+                    "preferedGenres":[], "userID":-1, "roomID":-1
+                }
             })
 
             .state('votingMoviesDetails', {
