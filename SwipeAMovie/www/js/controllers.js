@@ -1,14 +1,154 @@
+serverName = "192.168.0.104:3000";
+
+
+
 angular.module('app.controllers', [])
   
 .controller('createAnEventCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
+
+// scope é o contexto daquela view
+
 function ($scope, $stateParams) {
     var vm = this;
 
-    vm.entity = { date: new Date(), time: new Date(1970, 0, 0, 12, 34, 0, 0) };
+    vm.entity = { 
+        date: new Date(), 
+        description: "",
+        time: new Date(new Date().getHours()*3600000+new Date().getMinutes()*60000), 
+        title : "Swipe a Movie"
+    };    
 
+    vm.submit = function(){
+        var userID = -1,
+            roomID = -1;
+        console.log("Lets begin");
 
+        var getRoomRequest = function (){
+            var name = "__SAMROOMID__=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    roomID = parseInt(c.substring(name.length, c.length));
+                    console.log(">>>>>>>>>" + roomID);
+                    return; // TODO
+                    // Get RoomID and go to selection view
+                }
+            }
+
+            var getRoom = new XMLHttpRequest();
+            getRoom.open('POST', 'http://'+serverName+'/create_room', true);
+            getRoom.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+            getRoom.onload = function() {
+                try {
+                    if (getRoom.status >= 200 && getRoom.status < 400) {
+                        var data = JSON.parse(getRoom.responseText);
+                        roomID = data['roomId'];
+                        var d = new Date(vm.entity.date.getTime() + 172800000);
+                        var expires = "expires="+ d.toUTCString();
+                        document.cookie = "__SAMROOMID__=" +  roomID  + ";" + expires + ";path=/";
+
+                        var setupRoom = new XMLHttpRequest();
+                        setupRoom.open('POST', 'http://'+serverName+'/setup_room', true);
+                        setupRoom.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                        setupRoom.send(JSON.stringify({ 
+                            "title" : vm.entity.title, 
+                            "roomId" : roomID, 
+                            "description": vm.entity.description, 
+                            "date": vm.entity.date ? vm.entity.date.toISOString().split("T")[0] : null, 
+                            "time": vm.entity.time ? vm.entity.time.toISOString().split("T")[1] : null 
+                        }, null, 4)); 
+
+                        setupRoom.onload = function() { 
+                            if(setupRoom.status < 200 || setupRoom.status >= 400){
+                                console.error("Oh Noes! Something went wrong in the server\n"+setupRoom.responseText);
+                                // Refresh
+                            } else {
+                                return; // TODO
+                                // Go to next screen
+                            }
+                        }
+                        
+                        setupRoom.onerror = function() {
+                            console.error("Oh Noes! Something went wrong in the server\n"+setupRoom.responseText);
+                            // Refresh
+                        }
+                    } else {
+                        console.error("Oh Noes! Something went wrong in the server\n"+getRoom.responseText);
+                            // Refresh
+                    }
+                } catch(e) {
+                    console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+                        // Refresh
+                }
+            };
+
+            getRoom.onerror = function() {
+                console.error("Oh Noes! Something went wrong in the server\n"+getRoom.responseText);
+                // Refresh
+            };
+
+            getRoom.send(JSON.stringify({ "userId": userID }, null, 4));
+        };
+
+        var name = "__SAMUSERID__=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                userID = parseInt(c.substring(name.length, c.length));
+                console.log(">>>>>>>>>" + userID);
+                getRoomRequest();
+                return; // TODO
+                // Get RoomID and go to selection view
+            }
+        }
+        
+        var getUser = new XMLHttpRequest();
+        getUser.open('GET', 'http://'+serverName+'/create_user', true);
+
+        getUser.onload = function() {
+            try{
+                if (getUser.status >= 200 && getUser.status < 400) {
+                    var data = JSON.parse(getUser.responseText);
+                    console.log(data)
+                    userID = data["userId"];
+                    console.log(userID)
+                    var d = new Date(vm.entity.date.getTime() + 172800000);
+                    var expires = "expires="+ d.toUTCString();
+                    console.log(expires)
+                    document.cookie = "__SAMUSERID__=" + userID + ";" + expires + ";path=/";
+                    console.log(document.cookie);
+                    
+                    getRoomRequest();
+                } else {
+                    console.error("Oh Noes! Something went wrong in the server\n"+getUser.responseText);
+                    // Refresh
+                }
+            } catch(e) {
+                console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+                // Refresh
+            }
+        };
+
+        getUser.onerror = function() {
+            console.error("Oh Noes! Something went wrong in the server\n"+getUser.responseText);
+            // Refresh
+        };
+
+        getUser.send();
+    }
 }])
    
 .controller('invitationReceivedCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
