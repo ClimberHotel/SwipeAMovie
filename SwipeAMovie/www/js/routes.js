@@ -17,7 +17,7 @@ angular.module('app.routes', [])
             })
 
             .state('invitationReceived', {
-                url: '/events/{event}/invitation',
+                url: '/events/:roomId/invitation',
                 templateUrl: 'templates/invitationReceived.html',
                 controller: 'invitationReceivedCtrl',
                 controllerAs: 'vm'
