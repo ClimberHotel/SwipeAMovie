@@ -229,6 +229,9 @@ function ($scope, $state, $stateParams) {
                 };
 
                 getUser.send();
+            }else{
+                var userID = parseInt(c.substring(name.length, c.length));
+                $state.go('votingGenres', {"userID": userID, "roomID": roomId})
             }
         }
     };
@@ -445,7 +448,7 @@ function ($scope, $stateParams) {
     }
 
     vm.submit = function(){
-        preferedGenres = [];
+        var preferedGenres = [];
         for(g in vm.selectedGenres){
             if(vm.selectedGenres[g]){
                 preferedGenres.push(genres[g]);
