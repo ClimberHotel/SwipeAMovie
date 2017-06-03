@@ -4,15 +4,15 @@ serverName = "192.168.0.104:3000";
 
 angular.module('app.controllers', [])
 
-.controller('createAnEventCtrl', ['$scope', '$stateParams', '$cordovaSocialSharing', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('createAnEventCtrl', ['$scope', '$state', '$stateParams', '$cordovaSocialSharing', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 
-function ($scope, $stateParams, $cordovaSocialSharing) {
+function ($scope, $state, $stateParams, $cordovaSocialSharing) {
     var vm = this;
-    $scope.test=function(){
+    /*$scope.test=function(){
       $cordovaSocialSharing.share('This is my message', 'Subject string', null, 'http://www.mylink.com');
-    }
+    }*/
     vm.entity = { 
         date: new Date(), 
         description: "",
@@ -35,10 +35,9 @@ function ($scope, $stateParams, $cordovaSocialSharing) {
                     c = c.substring(1);
                 }
                 if (c.indexOf(name) == 0) {
-                    roomID = parseInt(c.substring(name.length, c.length));
+                    roomID = c.substring(name.length, c.length);
                     console.log(">>>>>>>>>" + roomID);
-                    return; // TODO
-                    // Get RoomID and go to selection view
+                    $state.go('votingGenres', {"userID": userID, "roomID": roomID});
                 }
             }
 
@@ -69,30 +68,29 @@ function ($scope, $stateParams, $cordovaSocialSharing) {
                         setupRoom.onload = function() { 
                             if(setupRoom.status < 200 || setupRoom.status >= 400){
                                 console.error("Oh Noes! Something went wrong in the server\n"+setupRoom.responseText);
-                                // Refresh
+                                alert("Oh Noes! Something went wrong in the server");
                             } else {
-                                return; // TODO
-                                // Go to next screen
+                                $state.go('votingGenres', {"userID": userID, "roomID": roomID});
                             }
                         }
                         
                         setupRoom.onerror = function() {
                             console.error("Oh Noes! Something went wrong in the server\n"+setupRoom.responseText);
-                            // Refresh
+                            alert("Oh Noes! Something went wrong in the server");
                         }
                     } else {
                         console.error("Oh Noes! Something went wrong in the server\n"+getRoom.responseText);
-                            // Refresh
+                        alert("Oh Noes! Something went wrong in the server");
                     }
                 } catch(e) {
                     console.error("Oh Noes! Something went wrong in the client\n"+e.error);
-                        // Refresh
+                    alert("Oh Noes! Something went wrong in the client");
                 }
             };
 
             getRoom.onerror = function() {
                 console.error("Oh Noes! Something went wrong in the server\n"+getRoom.responseText);
-                // Refresh
+                alert("Oh Noes! Something went wrong in the server");
             };
 
             getRoom.send(JSON.stringify({ "userId": userID }, null, 4));
@@ -110,8 +108,7 @@ function ($scope, $stateParams, $cordovaSocialSharing) {
                 userID = parseInt(c.substring(name.length, c.length));
                 console.log(">>>>>>>>>" + userID);
                 getRoomRequest();
-                return; // TODO
-                // Get RoomID and go to selection view
+                $state.go('votingGenres', {"userID": userID, "roomID": roomID});
             }
         }
         
@@ -134,17 +131,17 @@ function ($scope, $stateParams, $cordovaSocialSharing) {
                     getRoomRequest();
                 } else {
                     console.error("Oh Noes! Something went wrong in the server\n"+getUser.responseText);
-                    // Refresh
+                    alert("Oh Noes! Something went wrong in the server");
                 }
             } catch(e) {
                 console.error("Oh Noes! Something went wrong in the client\n"+e.error);
-                // Refresh
+                alert("Oh Noes! Something went wrong in the client");
             }
         };
 
         getUser.onerror = function() {
             console.error("Oh Noes! Something went wrong in the server\n"+getUser.responseText);
-            // Refresh
+            alert("Oh Noes! Something went wrong in the server");
         };
 
         getUser.send();

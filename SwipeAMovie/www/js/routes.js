@@ -41,7 +41,8 @@ angular.module('app.routes', [])
                 url: '/events/{id}/voting/genres',
                 templateUrl: 'templates/votingGenres.html',
                 controller: 'votingGenresCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                params: {"userID": -1, "roomID": -1}
             })
 
             .state('resultsCountdownUser', {
