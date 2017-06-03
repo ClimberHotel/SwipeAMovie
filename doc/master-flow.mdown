@@ -1,0 +1,55 @@
+# SAM - Swipe A Movie
+
+## Create event (Master)
+
+### FE Screen #1 (create event)
+1. Get roomId from BE
+
+2. Fill form data (Title, Description, Deadline)
+
+3. Get userId from BE
+
+4. Get Share Link roomId from BE
+
+5. Invite friends
+
+6. Share link to friends
+
+### FE Screen #2 (choose category)
+1. List categories total #8 (Actions, Romance...) :: Hardcoded in front end
+  - user will select int(8 / 2 + 1) = 5 categories
+
+2. send to server my choices
+
+### BE Server
+1. Create room :: get roomId
+
+2. Get Movies List (from SKY API)
+  - filter movies with our hardcoded categories choice
+  - insert all movies into table, with categories
+  movieId, title, description, category, link poster, link to trailer
+
+  - create room list of 5 random movies from each category into movie table of the room, with category :: use sky ID for movie (movieId)
+  roomId, movieId, title, description, category, link poster, link to trailer...
+
+3. generate list of movies for user based on selected categories, send to FE
+    - roomId, category, movieId, title...
+
+### FE Screen #3 (swipe movies)
+1. Get list from BE with my movies. Do random order on list
+
+2. Show next movie in list not voted
+
+3. User swipe (vote)
+
+4. Send to BE the vote (roomId, userId, category, movieId, vote)
+
+5. Mark movie as voted
+
+6. Jump to 1 until user finishes (press exit button) or no more movies to swipe
+
+7. Show wait screen with when the results will be shown
+
+### BE Server
+1. insert new vote into table of votes (this table has only inserts)
+
