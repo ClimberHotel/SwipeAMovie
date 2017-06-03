@@ -83,7 +83,7 @@
     </ion-content>
 
     <div class="cz-footer" ng-class="{ 'ready': remainingGenres == 0 }">
-        <input class="button button-positive button-block" type="submit" form="form" value="Pick a Movie" />
+        <input class="button button-positive button-block" type="submit" form="form" ng-click="vm.submit()" value="Pick a Movie" />
     </div>
 
 </ion-view>

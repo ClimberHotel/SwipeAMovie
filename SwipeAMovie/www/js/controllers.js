@@ -182,6 +182,7 @@ function ($scope, $stateParams) {
     var vm = this;
     
     vm.selectedGenres = [false, false, false, false, false, false, false, false];
+    genres = ["Action","Comedy","Drama","Family","Horror","Romance","Sci-Fi","Thriller"];
     
     $scope.remainingGenres = 5;
     $scope.onMouseClick = function (index) {
@@ -192,6 +193,16 @@ function ($scope, $stateParams) {
         $scope.remainingGenres = 5;
         for (var i = 0; i < vm.selectedGenres.length; i++)
             if (vm.selectedGenres[i]) $scope.remainingGenres --;
+    }
+
+    vm.submit = function(){
+        preferedGenres = [];
+        for(g in selectedGenres){
+            if(vm.selectedGenres[g]){
+                preferedGenres.push(genres[g]);
+            }
+        }
+        $state.go('votingMovies',{"preferedGenres":preferedGenres, "userID":userID, "roomID":roomID})
     }
 
 }])
