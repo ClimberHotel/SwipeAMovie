@@ -17,9 +17,9 @@ function ($scope, $state, $stateParams, $cordovaSocialSharing) {
     vm.entity = {
         date: new Date(),
         description: "",
-        time: new Date(new Date().getHours()*3600000+new Date().getMinutes()*60000),
-        title : "Swipe a Movie"
-    };
+        time: new Date((new Date().getHours() + 2)*3600000+new Date().getMinutes()*60000), 
+        title : null
+    };    
 
     vm.submit = function(){
         var userID = -1,
@@ -205,7 +205,8 @@ function ($scope, $state, $stateParams) {
                             console.log(data)
                             userID = data["userId"];
                             console.log(userID)
-                            var d = new Date(vm.entity.date.getTime() + 172800000);
+                            console.log(vm.room['time'])
+                            var d = new Date(vm.room['time'] + 172800000);
                             var expires = "expires="+ d.toUTCString();
                             console.log(expires)
                             document.cookie = "__SAMUSERID__=" + userID + ";" + expires + ";path=/";
@@ -228,6 +229,9 @@ function ($scope, $state, $stateParams) {
                 };
 
                 getUser.send();
+            }else{
+                var userID = parseInt(c.substring(name.length, c.length));
+                $state.go('votingGenres', {"userID": userID, "roomID": roomId})
             }
         }
     };

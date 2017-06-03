@@ -36,12 +36,18 @@ ion-content {
     border: none;
 }
 
-.item-stacked-label.error {
-    border: 1px solid red;
-}
-
 ion-view {
     background: none !important;
+}
+
+/*
+===================================================================================
+    Create an Event
+===================================================================================
+*/
+form .item-input input,
+form .item-input textarea {
+    border: 1px solid #E30073;
 }
 
 /*
