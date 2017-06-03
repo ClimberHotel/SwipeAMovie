@@ -1,6 +1,6 @@
 # SAM - Swipe A Movie
 
-## Create event (Master)
+## Master - The owner of the event
 
 ### FE Screen #1 (create event)
 1. Get userId from BE
@@ -56,3 +56,17 @@
 ### BE Server
 1. insert new vote into table of votes (this table has only inserts)
 
+### FE Screen #4 (wait until event reaches deadline)
+1. Show message stating when the event will end
+
+2. Have a share button for the Master to invite more friends
+
+3. [Best effort] Button to end sooner the event. We need to validate if we can do the push notification to all clients.
+
+### FE Screen #5 (show match)
+1. Get results from BE
+
+2. Download ical event
+
+### BE Server
+1. Crunch data and see who's the winner
