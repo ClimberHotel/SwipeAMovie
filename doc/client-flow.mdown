@@ -1,0 +1,39 @@
+# SAM - Swipe A Movie
+
+## Swipe event (Client)
+
+### FE Screen #1 (event info)
+1. With shared link get room info from BE
+
+2. show event info
+
+### FE Screen #2 (choose category)
+1. List categories total #8 (Actions, Romance...) :: Hardcoded in front end
+  - user will select int(8 / 2 + 1) = 5 categories
+
+2. send to server my choices
+
+### BE Server
+1. Send room info from share link
+
+2. generate list of movies for user based on selected categories, send to FE
+    - roomId, category, movieId, title...
+
+### FE Screen #3 (swipe movies)
+1. Get list from BE with my movies. Do random order on list
+
+2. Show next movie in list not voted
+
+3. User swipe (vote)
+
+4. Send to BE the vote (roomId, userId, category, movieId, vote)
+
+5. Mark movie as voted
+
+6. Jump to 1 until user finishes (press exit button) or no more movies to swipe
+
+7. Show wait screen with when the results will be shown
+
+### BE Server
+1. insert new vote into table of votes (this table has only inserts)
+
