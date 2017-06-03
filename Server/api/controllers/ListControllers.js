@@ -9,7 +9,8 @@ exports.createUser = function(req,res){
         if(err){
             return res.status(500).send(err);
         }else{
-            res.json(JSON.stringify({"userid":this.lastID}));
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify({"userid":this.lastID}));
         }
     });
 }
@@ -28,7 +29,8 @@ exports.createRoom = function(req,res){
         if(err){
             return res.status(500).send(err);
         }else{
-            res.json(JSON.stringify({"roomId":roomId}));
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify({"roomId":roomId}));
             var movies = new models.Movie()
             movies.getCategories(function(err,rows){
                 if(err){
@@ -40,7 +42,7 @@ exports.createRoom = function(req,res){
                                 console.log(err)
                             }else{
                                 moviesByCategory.forEach(function(movie){
-                                    new models.RoomMovies().addMovie(roomId,movie['uid'],row['category']);
+                                    new models.RoomMovies().addMovie(roomId,movie['uid']);
                                 });
                             }
                         });
@@ -103,13 +105,14 @@ exports.roomInfo = function(req,res){
             console.log(err);
             return res.status(500).send(err);
         }else{
-            return res.json(JSON.stringify(result))
+            res.setHeader('Content-Type', 'application/json');
+            return res.send(JSON.stringify(result))
         }
     });
 }
 
 exports.vote = function(req,res){
-
+    
 }
 
 exports.roomMovies = function(req,res){
@@ -124,17 +127,12 @@ exports.roomMovies = function(req,res){
 
     var categories = req.body['categories'];
     var movies = {};
-    categories = categories.map(function(arg){
-        return "\""+arg+"\""
-    })
     new models.RoomMovies().getMoviesByRoomIdAndCategory(roomId,categories,function(err,result){
         if(err){
-            console.log(err);
             return res.sendStatus(500);
         }else{
-            console.log(result);
-            console.log(this);
-            return res.sendStatus(200);
+            res.setHeader('Content-Type', 'application/json');
+            return res.send(JSON.stringify(result,null,4));
         }
     });
 
