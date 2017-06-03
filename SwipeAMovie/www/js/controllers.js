@@ -11,7 +11,7 @@ angular.module('app.controllers', [])
 function ($scope, $state, $stateParams, $cordovaSocialSharing) {
     var vm = this;
     $scope.shareLink=function(roomId){
-      $cordovaSocialSharing.share('Movie session at my place', 'Swipe A Movie', null, 'http://192.168.0.101:8100/#/events?roomId='+roomId);
+      $cordovaSocialSharing.share('Movie session at my place', 'Swipe A Movie', null, 'http://192.168.0.101:8100/#/events/'+roomId+'/invitation');
     };
 
     vm.entity = {
