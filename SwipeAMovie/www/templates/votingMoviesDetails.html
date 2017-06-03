@@ -1,53 +1,51 @@
-<ion-view hide-nav-bar="true">
+<ion-view title="Movie Details" hide-nav-bar="true">
     <ion-content padding="true" class="manual-ios-statusbar-padding">
-        <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
-            <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
-        </div>
-        <div>
-            <h3>
-                Resident Evil: The Final Chapter
-            </h3>
-            <h5 style="font-weight: normal; color: gray;">
-                2017 | 1h 42mins | +15
-            </h5>
 
-            <p>
-            </p>
-            <h4>Sinopse</h4>
-            <div>
-                Era uma vez coisas
-                <br> e depois mais coisas
-                <br> e coisas
+        <div style="color: white;">
+            <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
+                <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
             </div>
-            <p></p>
+            <div>
+                <h3 style="color: white;">
+                    Resident Evil: The Final Chapter
+                </h3>
+                <h5 style="font-weight: normal; color: gray;">
+                    2017 | 1h 42mins | +15
+                </h5>
 
-            <p>
-            </p>
-            <h4>Trailer</h4>
+                <p></p>
+                <h4 style="color: white;">Sinopse</h4>
+                <div style="font-weight: normal; color: gray;">
+                    Era uma vez cenas...
+                    <br>Depois batatas com cebolas na panela de pressão a fazerem sauna.
+                    <br>Os alhos a fazer cenas das cenas no dia das cenas.
+                </div>
+                <p></p>
 
-            <p></p>
-        </div>
-        <div ng-init="videourl_video1=&quot;https://www.youtube.com/embed/lTLTs2ZA2JQ?rel=0&amp;showinfo=0&quot;" style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;"
-            id="votingMoviesDetails-video1">
-            <iframe src="{{videourl_video1}}" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-        </div>
-        <div>
-            <p>
-            </p>
-            <h4>Actors</h4>
+                <p></p>
+                <h4 style="color: white;">Trailer</h4>
+                <p></p>
+            </div>
+            <div ng-init="videourl_video1=&quot;https://www.youtube.com/embed/lTLTs2ZA2JQ?rel=0&amp;showinfo=0&quot;" style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;">
+                <iframe src="{{videourl_video1}}" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+            </div>
+            <div>
+                <p></p>
+                <h4 style="color: white;">Actors</h4>
+                <p></p>
+            </div>
+            <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider2" delegate-handle="slider2" id="votingMoviesDetails-slider2"
+                style="width:100%;height:200px;">
+                <ion-slide-page id="votingMoviesDetails-slide210" style="background:url(&quot;img/avfsZwJT9WGsBj982ul1_kitten1.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
+                <ion-slide-page id="votingMoviesDetails-slide211" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
+                <ion-slide-page id="votingMoviesDetails-slide212" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
+            </ion-slides>
 
-            <p></p>
-        </div>
-        <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider2" delegate-handle="slider2" id="votingMoviesDetails-slider2"
-            style="width:100%;height:200px;">
-            <ion-slide-page id="votingMoviesDetails-slide210" style="background:url(&quot;img/avfsZwJT9WGsBj982ul1_kitten1.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-            <ion-slide-page id="votingMoviesDetails-slide211" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-            <ion-slide-page id="votingMoviesDetails-slide212" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-        </ion-slides>
-        <div id="votingMoviesDetails-button-bar7" class="button-bar">
-            <button id="votingMoviesDetails-button16" style="font-size:0px;border-radius:0px 0px 0px 0px;" class="button button-positive button-block icon ion-thumbsdown"></button>
-            <button id="votingMoviesDetails-button17" class="button button-positive button-block icon ion-checkmark"></button>
-            <button id="votingMoviesDetails-button18" class="button button-positive button-block icon ion-thumbsup"></button>
+            <div class="button-bar">
+                <button style="font-size:0px;border-radius:0px 0px 0px 0px;" class="button button-positive button-block icon ion-thumbsdown"></button>
+                <button class="button button-positive button-block icon ion-checkmark"></button>
+                <button class="button button-positive button-block icon ion-thumbsup"></button>
+            </div>
         </div>
     </ion-content>
 </ion-view>
