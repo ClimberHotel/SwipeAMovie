@@ -1,4 +1,4 @@
-serverName = "192.168.0.104:3000";
+serverName = "192.168.0.102:3000";
 
 
 
@@ -11,7 +11,7 @@ angular.module('app.controllers', [])
 function ($scope, $state, $stateParams, $cordovaSocialSharing) {
     var vm = this;
     $scope.shareLink=function(roomId){
-      $cordovaSocialSharing.share('This is my message', 'Subject string', null, 'http://192.168.0.104:3000/room/'+roomId);
+      $cordovaSocialSharing.share('Movie session at my place', 'Swipe A Movie', null, 'http://192.168.0.101:8100/#/events?roomId='+roomId);
     };
 
     vm.entity = {
@@ -180,7 +180,7 @@ function ($scope, $state, $stateParams) {
     var startTouch = null;
     $scope.touchProgress = 0;
     $scope.Math = Math;
-    
+
     function _onClick(event) {
         // TODO: go to details
     }
@@ -190,7 +190,7 @@ function ($scope, $state, $stateParams) {
         card.classList.add('dragging');
         startPosition = card.getBoundingClientRect();
         startTouch = event.touches[0];
-        
+
         // Update event listeners
         //card.removeEventListener('mousedown', _onMouseDown);
         card.removeEventListener('touchstart', _onMouseDown);
@@ -201,7 +201,7 @@ function ($scope, $state, $stateParams) {
     }
     function _onMouseUp(event) {
         event.preventDefault();
-        
+
         card.classList.remove('dragging');
 
         // Update event listeners
