@@ -17,9 +17,9 @@ function ($scope, $state, $stateParams, $cordovaSocialSharing) {
     vm.entity = {
         date: new Date(),
         description: "",
-        time: new Date(new Date().getHours()*3600000+new Date().getMinutes()*60000),
-        title : "Swipe a Movie"
-    };
+        time: new Date((new Date().getHours() + 2)*3600000+new Date().getMinutes()*60000), 
+        title : null
+    };    
 
     vm.submit = function(){
         var userID = -1,

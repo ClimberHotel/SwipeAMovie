@@ -1,43 +1,48 @@
 <ion-view title="Create an Event" hide-nav-bar="true">
-    <ion-content padding="true" scroll="false" class="manual-ios-statusbar-padding">
-        <h4 style="color: white; text-align: center;">Create an Event</h4>
+    <div class="cz-header" style="position: absolute; width: 100%; height: 44px; background: white;">
+        <h4 style="float: left; padding-left: 20px; line-height: 44px; margin: 0;">Swap a Movie!</h4>
+        <img style="height: 32px; float: right; margin-top: calc((44px - 32px) / 2); margin-right: 20px;" src="img/sky-logo.jpg" />
+    </div>
+    
+    <ion-content padding="true" scroll="false" class="manual-ios-statusbar-padding has-header">
+        <h5 style="color: white; font-weight: normal; padding: 0 16px; text-align: center;">
+            Challenge your friends for a movie night with a surprise movie, selected based on everyone's tastes!
+        </h5>
 
-        <div style="border-color: #ddd; border-width: 1px;">
-            <form name="form" class="list">
-                <label class="item item-input item-stacked-label" ng-class="{ 'error': form.title.$dirty && form.title.$invalid }" style="border-width: 0px;">
-                    <span class="input-label" style="color:white;">Title&nbsp;<span style="color: red;">*</span></span>
-                    <input type="text" name="title" ng-model="vm.entity.title"
-                           placeholder="e.g. Mary's Star Wars marathon" required>
-                </label>
+        <form name="form" class="list" style="margin-top: 32px;">
+            <label class="item item-input item-stacked-label"style="border-width: 0px;">
+                <span class="input-label" style="color:white;">Title&nbsp;<span style="color: #fd1d1d;">*{{ form.title.$dirty && form.title.$invalid ? ' This field is mandatory' : '' }}</span></span>
+                <input type="text" name="title" ng-model="vm.entity.title"
+                        placeholder="e.g. Afterwork movie marathon!" style="padding: 0 8px; "required>
+            </label>
 
-                <div class="cz-row" style="margin: -1px 0;">
-                    <div style="width: 50%;">
-                        <label class="item item-input item-stacked-label" ng-class="{ 'error': form.date.$dirty && form.date.$invalid }" style="margin: 0 -1px 0 0;border-width: 0px;">
-                            <span class="input-label" style="color:white;">Date&nbsp;<span style="color: red;">*</span></span>
-                            <input type="date" name="date" ng-model="vm.entity.date"
-                                placeholder="" style="text-align: center;" required>
-                        </label>
-                    </div>
-                    <div style="width: 50%;">
-                        <label class="item item-input item-stacked-label" ng-class="{ 'error': form.time.$dirty && form.time.$invalid }" style="margin: 0;border-width: 0px;">
-                            <span class="input-label" style="color:white;">Time&nbsp;<span style="color: red;">*</span></span>
-                            <input type="time" name="time" ng-model="vm.entity.time"
-                                   placeholder="12:00" style="text-align: center;" required>
-                        </label>
-                    </div>
+            <div class="cz-row" style="margin: -1px 0;">
+                <div style="width: 50%;">
+                    <label class="item item-input item-stacked-label" style="margin: 0 -1px 0 0;border-width: 0px;">
+                        <span class="input-label" style="color:white;">Date&nbsp;<span style="color: #fd1d1d;">*{{ form.date.$dirty && form.date.$invalid ? ' This field is mandatory' : '' }}</span></span>
+                        <input type="date" name="date" ng-model="vm.entity.date"
+                            placeholder="" style="padding: 0 8px;" required>
+                    </label>
                 </div>
+                <div style="width: 50%;">
+                    <label class="item item-input item-stacked-label" style="margin: 0;border-width: 0px;">
+                        <span class="input-label" style="color:white;">Time&nbsp;<span style="color: #fd1d1d;">*{{ form.time.$dirty && form.time.$invalid ? ' This field is mandatory' : '' }}</span></span>
+                        <input type="time" name="time" ng-model="vm.entity.time"
+                                placeholder="12:00" style="padding: 0 8px;" required>
+                    </label>
+                </div>
+            </div>
 
-                <label class="item item-input item-stacked-label" style="border-width: 0px;">
-                    <span class="input-label" style="color:white;">Description</span>
-                    <textarea name="description" ng-model="vm.entity.description" style="height: 125px;"
-                              placeholder="(optional)"></textarea>
-                </label>
-            </form>
-        </div>
+            <label class="item item-input item-stacked-label" style="border-width: 0px;">
+                <span class="input-label" style="color:white;">Description</span>
+                <textarea name="description" ng-model="vm.entity.description" style="height: 125px; padding: 8px;"
+                            placeholder="(optional)"></textarea>
+            </label>
+        </form>
 
     </ion-content>
 
     <div class="cz-footer ready">
-        <input class="button button-positive button-block" type="submit" form="form" ng-click="vm.submit()" value="Invite Friends" />
+        <input class="button button-positive button-block" type="submit" form="form" ng-click="vm.submit()" value="Invite your Friends" />
     </div>
 </ion-view>
