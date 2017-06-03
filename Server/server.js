@@ -19,5 +19,4 @@ console.log('Server started on port: ' + port);
 function populateDB(){
     var models = require('./api/models/ListModels')
     var movies = new models.Movie()
-
 }

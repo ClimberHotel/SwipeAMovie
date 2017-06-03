@@ -1,6 +1,6 @@
 var sqlite3 = require('sqlite3');
 var db = new sqlite3.Database('./data/database.db');
-
+db.run("PRAGMA foreign_keys = ON;")
 var room = Room.prototype;
 var movies = Movie.prototype;
 var votes = Vote.prototype;
@@ -80,8 +80,14 @@ function RoomMovies(){  //5 movies of eah category
 
 function Vote(){
     db.serialize(function(){
-        db.run("CREATE TABLE IF NOT EXISTS votes (userId INTEGER, roomId TEXT, movieId TEXT, roomFOREIGN KEY(userId) REFERENCES users(uid), FOREIGN KEY(roomID) REFERENCES rooms(uid) ON DELETE CASCADE, FOREIGN KEY(movieId) REFERENCES movies(uid) ON DELETE CASCADE,"
-        +"like INTEGER, dislike INTEGER, category TEXT, PRIMARY KEY(userId,roomId,movieId))",function(err){
+        db.run("CREATE TABLE IF NOT EXISTS votes ("
+            +"userId INTEGER REFERENCES users(uid),"
+            +"roomId TEXT REFERENCES rooms(uid),"
+            +"movieId TEXT REFERENCES movies(uid),"
+            +"like INTEGER, dislike INTEGER,"
+            +"PRIMARY KEY(userId, roomId, movieId)"
+        +")",
+        function(err){
             if(err){
                 console.log(err);
             }
@@ -132,13 +138,9 @@ roomMovies.addMovie = function(roomId,movieId){
     });
 }
 
-votes.addVote = function(userId,roomId,movieId,like,dislike,category){
+votes.addVote = function(userId,roomId,movieId,like,dislike,callback){
     db.serialize(function(){
-        db.run("INSERT INTO votes(userId,roomId,movieId,likes,dislike,category) VALUES (?,?,?,?,?)",userId,roomId,movieId,like,dislike,category,function(err){
-            if(err){
-                console.log(err);
-            }
-        });
+        db.run("INSERT INTO votes(userId,roomId,movieId,like,dislike) VALUES (?,?,?,?,?)",userId,roomId,movieId,like,dislike,callback);
     });
 }
 

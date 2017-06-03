@@ -111,8 +111,20 @@ exports.roomInfo = function(req,res){
     });
 }
 
-exports.vote = function(req,res){
+exports.vote = function(req, res){
+    var roomID = req.params['uid'];
+    var movieID = req.body['movieId'];
+    var userID = req.body['userId'];
+    var isLike = req.body['isLike'].toLowerCase() == 'true';
     
+    new models.Vote().addVote(
+        userID,
+        roomID,
+        movieID,
+        isLike ? 1 : 0,
+        isLike ? 0 : 1,
+        err => res.sendStatus(err ? 500 : 200)
+    );    
 }
 
 exports.roomMovies = function(req,res){
