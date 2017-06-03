@@ -29,7 +29,7 @@ angular.module('app.routes', [])
                 controller: 'votingMoviesCtrl',
                 controllerAs: 'vm',
                 params:{
-                    "movieList":[],"movieListIndex":0, "userID":-1, "roomID":-1
+                    "movieList":[],"movieListIndex":0, "userID":-1, "roomID":-1, "deadline": new Date()
                 }
             })
 
@@ -40,7 +40,7 @@ angular.module('app.routes', [])
                 controllerAs: 'vm',
                 parent: 'votingMovies',
                 params:{
-                    "movieList":[],"movieListIndex":0, "userID":-1, "roomID":-1
+                    "movieList":[],"movieListIndex":0, "userID":-1, "roomID":-1, "deadline": new Date()
                 }
             })
 
@@ -49,14 +49,15 @@ angular.module('app.routes', [])
                 templateUrl: 'templates/votingGenres.html',
                 controller: 'votingGenresCtrl',
                 controllerAs: 'vm',
-                params: {"userID": -1, "roomID": -1}
+                params: {"userID": -1, "roomID":-1, "deadline": new Date() }
             })
 
             .state('resultsCountdownUser', {
                 url: '/events/{id}/result/countdown',
                 templateUrl: 'templates/resultsCountdownUser.html',
                 controller: 'resultsCountdownUserCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                params: { "roomID":-1, "deadline": new Date() }
             })
 
             .state('resultsCountdownAdmin', {
