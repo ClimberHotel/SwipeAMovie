@@ -52,6 +52,7 @@ When we are hosting a movie session at home during the swiping stage, you will h
 ## The Master Plan
 
 [For the Master Is Here](master-flow.mdown)
+
 [For the Cliente Is Here](client-flow.mdown)
 
 
