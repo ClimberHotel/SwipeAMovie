@@ -229,6 +229,8 @@ function ($scope, $stateParams) {
             "categories": preferedGenres
         }, null, 4));
 
+        movieList.sort(function(a,b){return 0.5 - Math.random()});
+
         $state.go('votingMovies',{"movieList":movieList, "userID":$stateParams['userID'], "roomID":$stateParams['roomID']})
     }
 
