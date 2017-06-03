@@ -1,0 +1,4 @@
+# Validar no Ionic
+- fazer o share link via sistema
+- manter o websocket
+- fazer a push notification
