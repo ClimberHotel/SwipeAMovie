@@ -3,9 +3,11 @@
 ## Swipe event (Client)
 
 ### FE Screen #1 (event info)
-1. With shared link get room info from BE
+1. Get userId from BE
 
-2. show event info
+2. With shared link get room info from BE
+
+3. Show event info
 
 ### FE Screen #2 (choose category)
 1. List categories total #8 (Actions, Romance...) :: Hardcoded in front end
@@ -14,10 +16,13 @@
 2. send to server my choices
 
 ### BE Server
-1. Send room info from share link
+1. Create user :: send userId
+
+2. Send room info to FE
 
 2. generate list of movies for user based on selected categories, send to FE
     - roomId, category, movieId, title...
+    - response to FE Screen #2.2
 
 ### FE Screen #3 (swipe movies)
 1. Get list from BE with my movies. Do random order on list

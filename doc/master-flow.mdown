@@ -3,13 +3,13 @@
 ## Create event (Master)
 
 ### FE Screen #1 (create event)
-1. Get roomId from BE
+1. Get userId from BE
 
-2. Fill form data (Title, Description, Deadline)
+2. Get roomId from BE
 
-3. Get userId from BE
+3. Fill form data (Title, Description, Deadline)
 
-4. Get Share Link roomId from BE
+4. Create Share Link with roomId
 
 5. Invite friends
 
@@ -19,12 +19,14 @@
 1. List categories total #8 (Actions, Romance...) :: Hardcoded in front end
   - user will select int(8 / 2 + 1) = 5 categories
 
-2. send to server my choices
+2. send to server my choices :: roomId, [categories]
 
 ### BE Server
-1. Create room :: get roomId
+1. Create user :: send userId
 
-2. Get Movies List (from SKY API)
+2. Create room :: send roomId
+
+3. Get Movies List (from SKY API)
   - filter movies with our hardcoded categories choice
   - insert all movies into table, with categories
   movieId, title, description, category, link poster, link to trailer
@@ -32,8 +34,9 @@
   - create room list of 5 random movies from each category into movie table of the room, with category :: use sky ID for movie (movieId)
   roomId, movieId, title, description, category, link poster, link to trailer...
 
-3. generate list of movies for user based on selected categories, send to FE
+4. generate list of movies for user based on selected categories, send to FE
     - roomId, category, movieId, title...
+    - response to FE Screen #2.2
 
 ### FE Screen #3 (swipe movies)
 1. Get list from BE with my movies. Do random order on list
