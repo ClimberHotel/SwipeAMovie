@@ -169,6 +169,72 @@ function ($scope, $state, $stateParams) {
 
     
 
+    var card = document.getElementById("card0");
+    card.addEventListener('click', _onClick);
+    //card.addEventListener('mousedown', _onMouseDown);
+    card.addEventListener('touchstart', _onMouseDown);
+
+    var startPosition = null;
+    var startTouch = null;
+    $scope.touchProgress = 0;
+    $scope.Math = Math;
+    
+    function _onClick(event) {
+        // TODO: go to details
+    }
+    function _onMouseDown(event) {
+        event.preventDefault();
+
+        card.classList.add('dragging');
+        startPosition = card.getBoundingClientRect();
+        startTouch = event.touches[0];
+        
+        // Update event listeners
+        //card.removeEventListener('mousedown', _onMouseDown);
+        card.removeEventListener('touchstart', _onMouseDown);
+        //card.addEventListener('mouseup', _onMouseUp);
+        card.addEventListener('touchend', _onMouseUp);
+        //window.addEventListener('mousemove', _onMouseMove);
+        window.addEventListener('touchmove', _onMouseMove);
+    }
+    function _onMouseUp(event) {
+        event.preventDefault();
+        
+        card.classList.remove('dragging');
+
+        // Update event listeners
+        //card.removeEventListener('mouseup', _onMouseUp);
+        card.removeEventListener('touchend', _onMouseUp);
+        //card.addEventListener('mousedown', _onMouseDown);
+        card.addEventListener('touchstart', _onMouseDown)
+        //window.removeEventListener('mousemove', _onMouseMove);
+        window.removeEventListener('touchmove', _onMouseMove);
+
+        if ($scope.touchProgress > -.45 && $scope.touchProgress < .45) {
+            // Reset back to original position
+            card.style.transform = '';
+            $scope.touchProgress = 0;
+            $scope.$digest();
+        } else {
+            // Do the swipe!
+            $scope.touchProgress *= 3;
+            _animateCard();
+        }
+    }
+    function _onMouseMove(event) {
+        var touch = event.touches[0];
+        var translateX = (touch.clientX - startTouch.clientX + startPosition.left - 42);
+        $scope.touchProgress = (translateX / startPosition.width);
+        $scope.$digest();
+
+        _animateCard();
+    }
+    function _animateCard() {
+        card.style.transform = 'translateX(' + $scope.touchProgress * startPosition.width + 'px)'; // No idea why i need to subtract 42
+        card.style.transform += 'translateY(' + -Math.abs($scope.touchProgress * 48) + 'px)';
+        card.style.transform += 'rotateZ(' + $scope.touchProgress * 15 + 'deg)';
+    }
+
 }])
 
 .controller('votingMoviesDetailsCtrl', ['$scope', '$state', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller

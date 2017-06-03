@@ -21,8 +21,17 @@ ion-content {
     transform: translateY(0) !important;
 }
 
+.ellipsis-multiline {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
 /* Ionic customization */
-.button.button-positive {
+.button.button-positive,
+.pick-a-movie .button.button-positive.button-small:before
+ {
     background: linear-gradient(155deg, #fd1d1d, #E30073, #833ab4);
     border: none;
 }
@@ -117,4 +126,66 @@ ion-view {
 .cz-movie-genre.selected .overlay {
     background-image: initial !important;
     background-color: #1B998B !important;
+}
+
+/*
+===================================================================================
+    Pick a Movie
+===================================================================================
+*/
+.card {
+    position: relative;
+    top: calc(50% - 200px - 50px);
+    margin: 0 32px !important;
+    border: 4px solid white;
+    border-radius: 6px;
+    transition: transform .125s ease-out;
+}
+.card.dragging {
+    transition: initial;
+}
+.card .image {
+    margin: 0px;
+    line-height: 250px;
+    border-radius: 6px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.card .overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.card .overlay .icon:before {
+    font-size: 10em;
+}
+
+.pick-a-movie .button.button-positive {
+    float: left;
+    width: 76px;
+    height: 76px;
+    border-radius: 100%;
+    padding: 0;
+}
+.pick-a-movie .button.button-positive:before {
+    font-size: 40px !important;
+}
+
+.pick-a-movie .button.button-positive.button-small {
+    background: white !important;
+    width: 64px;
+    height: 64px;
+    margin-top: 22px;
+}
+.pick-a-movie .button.button-positive.button-small:before {
+    font-size: 36px !important;
+    color:transparent;
+    -webkit-background-clip: text;
+    padding: 8px;
 }

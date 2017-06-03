@@ -1,28 +1,37 @@
 <ion-view hide-nav-bar="true">
     <ion-content padding="true" scroll="false" class="manual-ios-statusbar-padding">
 
-        <div class="list card">
-            <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
-                <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+        <div id="card0" class="list card" ng-touchstart="initCard($event)">
+            <div class="image" style="background-image: url('img/genre-action.jpg')">
+                <i class="icon">&nbsp;</i>
             </div>
-            
-            <div class="item item-body">
-                <div class="show-list-numbers-and-dots">
-                    <p style="margin-top:0px;color:#000000;font-size:20px;">Resident Evil: The Final Chapter</p>
-                </div>
-                <div class="show-list-numbers-and-dots">
-                    <p style="margin-top:0px;color:#808080;">2017 | 1h42mins | Cert. 15</p>
-                </div>
+            <div style="position: relative; margin: 8px 12px;">
+                <h3 class="ellipsis-multiline" style="margin-top: 0; font-weight: bold; max-height: 56px;">Resident Evil: The Final Chapter asdas asdas asdas asda</h3>
+                <h5 style="font-weight: normal; color:#9E9E9E;">2017 | 1h 42mins | +15</h5>
+                <p class="ellipsis-multiline" style="line-height: 1.2em; max-height: 64px; ">
+                    Era uma vez tres amigos.</br>
+                    O primeiro amigo era vermelho</br>
+                    O segundo era amarelo</br>
+                    E o terceiro era vermelhor</br>
+                    E depois apareceu um quarto...
+                </p>
+                <div style="position: absolute; bottom: 0; right: 0; color: #E30073; margin-bottom: -8px;">Read more</div>
+            </div>
+            <div class="overlay" ng-style="{ 'background': touchProgress < 0 ? '#fd1d1d' : '#1B998B', 'opacity': Math.abs(touchProgress) }">
+                <div class="icon" style="width: 100%; text-align: center; color: white;"
+                     ng-class="{ 'ion-sad': touchProgress < 0, 'ion-happy': touchProgress > 0.0 }"></div>
             </div>
         </div>
         <div class="spacer" style="width: 300px; height: 88px;"></div>
 
     </ion-content>
     
-    <div class="cz-footer ready button-bar">
-        <button style="font-size:0px;border-radius:0px 0px 0px 0px;" class="button button-positive button-block icon ion-thumbsdown"></button>
-        <button class="button button-positive button-block icon ion-checkmark"></button>
-        <button class="button button-positive button-block icon ion-thumbsup"></button>
+    <div class="cz-footer ready pick-a-movie" style="width: calc(100% - 8px);">
+        <div style="display: flex; justify-content: space-between; margin: 24px 8px;">
+            <button class="button button-positive button-block icon ion-thumbsdown"></button>
+            <button class="button button-positive button-block button-small icon ion-checkmark"></button>
+            <button class="button button-positive button-block icon ion-thumbsup"></button>
+        </div>
     </div>
 
 </ion-view>
