@@ -9,7 +9,7 @@ var roomMovies = RoomMovies.prototype;
 
 function Room(){
     db.serialize(function(){
-        db.run("CREATE TABLE IF NOT EXISTS rooms (uid TEXT PRIMARY KEY, title TEXT, description TEXT, deadline DATETIME, admin TEXT)", function(err){
+        db.run("CREATE TABLE IF NOT EXISTS rooms (uid TEXT PRIMARY KEY, title TEXT, description TEXT, deadline DATETIME, admin TEXT, finish INTEGER DEFAULT 0)", function(err){
             if(err){
                 console.log(err);
             }
@@ -19,8 +19,8 @@ function Room(){
 
 function Movie(){   //full movies
     db.serialize(function(){
-        db.run("CREATE TABLE IF NOT EXISTS movies (uid TEXT PRIMARY KEY,title TEXT, synopsis TEXT, shortSynopsis Text, mediumSynopsis text,"
-        +"rantings INTEGER, duration INTEGER, year INTEGER, dvdReleaseDate DATETIME, category TEXT, lastUpdateDate DATETIME, imageCover TEXT, imageBanner TEXT,"
+        db.run("CREATE TABLE IF NOT EXISTS movies(uid TEXT PRIMARY KEY,title TEXT, synopsis TEXT, shortSynopsis TEXT, mediumSynopsis TEXT,"
+        +"ratings INTEGER, duration INTEGER, year INTEGER, dvdReleaseDate DATETIME, category TEXT, lastUpdateDate DATETIME, imageCover TEXT, imageBanner TEXT,"
         +"trailerUrl TEXT)", function(err){
             if(err){
                 console.log(err);
@@ -31,7 +31,7 @@ function Movie(){   //full movies
 
 function User(){
     db.serialize(function(){
-        db.run("CREATE TABLE IF NOT EXISTS users(uid TEXT PRIMARY KEY)",function(err){
+        db.run("CREATE TABLE IF NOT EXISTS users(uid INTEGER PRIMARY KEY)",function(err){
             if(err){
                 console.log(err);
             }
@@ -41,7 +41,7 @@ function User(){
 
 function RoomMovies(){  //5 movies of eah category
     db.serialize(function(){
-        db.run("CREATE TABLE IF NOT EXISTS roomMovies(FOREIGN KEY(roomId) REFERENCES rooms(key) ON DELETE CASCADE, FOREIGN KEY(movieId) REFERENCES movies(uid) ON DELETE CASCADE)",function(err){
+        db.run("CREATE TABLE IF NOT EXISTS roomMovies(roomId TEXT, movieId TEXT, category TEXT, FOREIGN KEY(roomId) REFERENCES rooms(uid) ON DELETE CASCADE, FOREIGN KEY(movieId) REFERENCES movies(uid) ON DELETE CASCADE)",function(err){
             if(err){
                 console.log(err);
             }
@@ -51,7 +51,29 @@ function RoomMovies(){  //5 movies of eah category
 
 function Vote(){
     db.serialize(function(){
-        db.run("CREATE TABLE IF NOT EXISTS votes (FOREIGN KEY(userId) REFERENCES users(uid), FOREIGN KEY(roomID) REFERENCES rooms(key) ON DELETE CASCADE, FOREIGN KEY(movieId) REFERENCES movies(uid) ON DELETE CASCADE,"
+        db.run("CREATE TABLE IF NOT EXISTS votes (userId INTEGER, roomId TEXT, movieId TEXT, roomFOREIGN KEY(userId) REFERENCES users(uid), FOREIGN KEY(roomID) REFERENCES rooms(uid) ON DELETE CASCADE, FOREIGN KEY(movieId) REFERENCES movies(uid) ON DELETE CASCADE,"
+        +"like INTEGER, dislike INTEGER, category TEXT, PRIMARY KEY(userId,roomId,movieId))",function(err){
+            if(err){
+                console.log(err);
+            }
+        });
+    });
+}
+/*
+
+function RoomMovies(){  //5 movies of eah category
+    db.serialize(function(){
+        db.run("CREATE TABLE IF NOT EXISTS roomMovies(roomId TEXT, movieId TEXT)",function(err){
+            if(err){
+                console.log(err);
+            }
+        });
+    });
+}
+
+function Vote(){
+    db.serialize(function(){
+        db.run("CREATE TABLE IF NOT EXISTS votes (FOREIGN KEY(userId) REFERENCES users(uid), FOREIGN KEY(roomID) REFERENCES rooms(uid) ON DELETE CASCADE, FOREIGN KEY(movieId) REFERENCES movies(uid) ON DELETE CASCADE,"
         +"like INTEGER, dislike INTEGER, category TEXT, PRIMARY KEY(userId,roomId,movieId))",function(err){
             if(err){
                 console.log(err);
@@ -60,6 +82,7 @@ function Vote(){
     });
 }
 
+*/
 room.newRoom = function(key,admin,callback){
     db.serialize(function(){
         //need to generate a key for the room
@@ -93,9 +116,9 @@ room.setDeadline = function(roomId,deadline){
     });
 }
 
-roomMovies.addMovie = function(roomId,movieId){
+roomMovies.addMovie = function(roomId,movieId,category){
     db.serialize(function(){
-        db.run("INSERT INTO roomMovie(roomId,movieId) VALUES (?,?,?)",userId,movieId,roomId,function(err){
+        db.run("INSERT INTO roomMovies(roomId,movieId,category) VALUES (?,?,?)",roomId,movieId,category,function(err){
             if(err){
                 console.log(err);
             }
@@ -123,8 +146,48 @@ users.addUser = function(callback){
 movies.addMovie = function(uid,title,synopsis,shortSynopsis,mediumSynopsis,ratings,duration,year,dvdReleaseDate,category,lastUpdateDate,imageCover,imageBanner,trailerUrl,callback){
     db.serialize(function(){
         db.run("INSERT INTO movies(uid,title,synopsis,shortSynopsis,mediumSynopsis,ratings,duration,year,dvdReleaseDate,category,lastUpdateDate,imageCover,imageBanner,trailerUrl)"
-        +" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",uid,title,synopsis,shortSynopsis,mediumSynopsis,ratings,duration,year,dvdReleaseDate,category,lastUpdateDate,imageCover,imageBanner
-        ,trailerUrl,callback);
+        +" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",uid,title,synopsis,shortSynopsis,mediumSynopsis,ratings,duration,year,dvdReleaseDate,category,lastUpdateDate,imageCover,imageBanner,trailerUrl,callback);
+    });
+}
+
+movies.getCategories = function(callback){
+    db.serialize(function(){
+        db.all("SELECT DISTINCT category FROM movies",callback);
+    })
+}
+
+movies.getFromCategory = function(category, callback){
+    db.serialize(function(){
+        db.all("SELECT * FROM movies WHERE category = ?", category,callback);
+    })
+}
+
+room.addFinished = function(roomId,callback){
+    db.serialize(function(){
+        db.run("UPDATE rooms SET finish = finish + 1 WHERE uid=?",roomId,callback)
+    });
+}
+
+room.getInfo = function(roomId,callback){
+    db.serialize(function(){
+        db.get("SELECT * FROM rooms WHERE uid=?",roomId,callback);
+    });
+}
+
+roomMovies.getMoviesByRoomIdAndCategory = function(roomId,category,callback){
+    console.log(category);
+
+    eval('db.serialize(function(){' +       
+            'db.all("SELECT movieId FROM roomMovies WHERE (roomId=? AND category in ("'+
+                category.map(function(){return '?'}).join(",")+ 
+                '))",roomId,'+
+                    category.map(function(i,p){return "category["+i+"]"}).join(",")
+                +',callback)})');
+}
+
+movies.getInfo = function(movieId,callback){
+    db.serialize(function(){
+            db.get("SELECT * FROM movies WHERE uid=?",movieId,callback);
     });
 }
 

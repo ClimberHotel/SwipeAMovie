@@ -11,6 +11,15 @@ module.exports = function(app){
 
     app.route('/setup_room/')
         .post(controller.setupRoom);
-//    app.route('/room/')
+
+    app.route('/finished/')
+        .post(controller.finished);
+
+    app.route('/room/:uid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})')
+        .get(controller.roomInfo)
+        .post(controller.vote)
+
+    app.route('/room/:uid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/movies')
+        .post(controller.roomMovies)
 
 };
