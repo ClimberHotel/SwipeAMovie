@@ -1,5 +1,5 @@
 <ion-view title="results/decision" hide-nav-bar="true" id="page8">
-  <ion-content padding="true" class="manual-ios-statusbar-padding">
+  <ion-content padding="true" scroll="false" class="has-header">
     <h3 style="text-align: center;">And the winner is...</h3>
     <div class="list card" id="resultsDecision-card24">
       <div class="spacer" style="width: 300px; height: 45px;"></div>
@@ -14,7 +14,10 @@
           <p style="margin-top:0px;color:#808080;">2017 | 1h42mins | Cert. 15</p>
         </div>
       </div>
-      <button id="resultsDecision-button28" class="button button-positive button-block">Add to Calendar</button>
     </div>
   </ion-content>
+
+    <div class="cz-footer">
+        <input class="button button-positive button-block" type="submit" form="form" value="Add to Calendar" ng-click="test()"/>
+    </div>
 </ion-view>
