@@ -10,15 +10,16 @@ angular.module('app.controllers', [])
 
 function ($scope, $state, $stateParams, $cordovaSocialSharing) {
     var vm = this;
-    /*$scope.test=function(){
-      $cordovaSocialSharing.share('This is my message', 'Subject string', null, 'http://www.mylink.com');
-    }*/
-    vm.entity = { 
-        date: new Date(), 
+    $scope.shareLink=function(roomId){
+      $cordovaSocialSharing.share('This is my message', 'Subject string', null, 'http://192.168.0.104:3000/room/'+roomId);
+    };
+
+    vm.entity = {
+        date: new Date(),
         description: "",
-        time: new Date(new Date().getHours()*3600000+new Date().getMinutes()*60000), 
+        time: new Date(new Date().getHours()*3600000+new Date().getMinutes()*60000),
         title : "Swipe a Movie"
-    };    
+    };
 
     vm.submit = function(){
         var userID = -1,
@@ -57,23 +58,24 @@ function ($scope, $state, $stateParams, $cordovaSocialSharing) {
                         var setupRoom = new XMLHttpRequest();
                         setupRoom.open('POST', 'http://'+serverName+'/setup_room', true);
                         setupRoom.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-                        setupRoom.send(JSON.stringify({ 
-                            "title" : vm.entity.title, 
-                            "roomId" : roomID, 
-                            "description": vm.entity.description, 
-                            "date": vm.entity.date ? vm.entity.date.toISOString().split("T")[0] : null, 
-                            "time": vm.entity.time ? vm.entity.time.toISOString().split("T")[1] : null 
-                        }, null, 4)); 
+                        setupRoom.send(JSON.stringify({
+                            "title" : vm.entity.title,
+                            "roomId" : roomID,
+                            "description": vm.entity.description,
+                            "date": vm.entity.date ? vm.entity.date.toISOString().split("T")[0] : null,
+                            "time": vm.entity.time ? vm.entity.time.toISOString().split("T")[1] : null
+                        }, null, 4));
 
-                        setupRoom.onload = function() { 
+                        setupRoom.onload = function() {
                             if(setupRoom.status < 200 || setupRoom.status >= 400){
                                 console.error("Oh Noes! Something went wrong in the server\n"+setupRoom.responseText);
                                 alert("Oh Noes! Something went wrong in the server");
                             } else {
+                                $scope.shareLink(roomID);
                                 $state.go('votingGenres', {"userID": userID, "roomID": roomID});
                             }
                         }
-                        
+
                         setupRoom.onerror = function() {
                             console.error("Oh Noes! Something went wrong in the server\n"+setupRoom.responseText);
                             alert("Oh Noes! Something went wrong in the server");
@@ -111,7 +113,7 @@ function ($scope, $state, $stateParams, $cordovaSocialSharing) {
                 $state.go('votingGenres', {"userID": userID, "roomID": roomID});
             }
         }
-        
+
         var getUser = new XMLHttpRequest();
         getUser.open('GET', 'http://'+serverName+'/create_user', true);
 
@@ -127,7 +129,7 @@ function ($scope, $state, $stateParams, $cordovaSocialSharing) {
                     console.log(expires)
                     document.cookie = "__SAMUSERID__=" + userID + ";" + expires + ";path=/";
                     console.log(document.cookie);
-                    
+
                     getRoomRequest();
                 } else {
                     console.error("Oh Noes! Something went wrong in the server\n"+getUser.responseText);
@@ -167,7 +169,7 @@ function ($scope, $state, $stateParams) {
         $state.go('resultsCountdownUser');
     }
 
-    
+
 
     var card = document.getElementById("card0");
     card.addEventListener('click', _onClick);
@@ -351,10 +353,10 @@ function ($scope, $state, $stateParams) {
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
     var vm = this;
-    
+
     vm.selectedGenres = [false, false, false, false, false, false, false, false];
     genres = ["Action","Comedy","Drama","Family","Horror","Romance","Sci-Fi","Thriller"];
-    
+
     $scope.remainingGenres = 5;
     $scope.onMouseClick = function (index) {
         var newValue = !vm.selectedGenres[index];
