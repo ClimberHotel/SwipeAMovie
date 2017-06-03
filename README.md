@@ -52,6 +52,6 @@ When we are hosting a movie session at home during the swiping stage, you will h
 ## Who are we
 
 - Ricardo Tavares - The pink gradient Front End guy
-- Micael Batista - The
-- Fernando Marques -
-- Joao Pedro -
+- Micael Batista - The Front End runaway
+- Fernando Marques - The Back End rat
+- Joao Pedro - The Boss of the Odd Jobs
