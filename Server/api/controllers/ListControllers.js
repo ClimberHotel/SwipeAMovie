@@ -10,7 +10,7 @@ exports.createUser = function(req,res){
             return res.status(500).send(err);
         }else{
             res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({"userid":this.lastID}));
+            res.send(JSON.stringify({"userId":this.lastID}));
         }
     });
 }
