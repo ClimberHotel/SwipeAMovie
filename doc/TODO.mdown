@@ -10,3 +10,4 @@
 
 - fazer link to our app
   [How to share our link to open our app](https://stackoverflow.com/questions/38129730/how-to-share-a-link-within-ionic-app-that-links-back-to-the-app)
+

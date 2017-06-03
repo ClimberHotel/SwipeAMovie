@@ -1,4 +1,8 @@
 /* Empty. Add your own CSS if you like */
+ 
+ion-content {
+     background: radial-gradient(at top, #0E326E, #030F1F);
+ }
 
 .cz-row {
     display: flex;
@@ -8,12 +12,27 @@
     position: absolute;
     bottom: 0px;
     width: 100%;
-    padding: 0 10px;
+    padding: 10px 10px 0 10px;
+    background: linear-gradient(to top, rgba(3, 15, 31, 1) 50%, rgba(3, 15, 31, 0));
+    transition: transform 0.25s ease-in-out;
+    transform: translateY(77px);
+}
+.cz-footer.ready {
+    transform: translateY(0) !important;
 }
 
 /* Ionic customization */
+.button.button-positive {
+    background: linear-gradient(155deg, #fd1d1d, #E30073, #833ab4);
+    border: none;
+}
+
 .item-stacked-label.error {
     border: 1px solid red;
+}
+
+ion-view {
+    background: none !important;
 }
 
 /*
@@ -26,6 +45,9 @@
     width: 50%;
     margin: 5px;
     overflow: hidden;
+}
+.cz-movie-genre:active {
+    transform: scale(0.95);
 }
 .cz-movie-genre:before {
     content: "";
@@ -59,29 +81,40 @@
     filter: blur(2px);
 }
 .cz-row:nth-child(1) .cz-movie-genre:nth-child(1) .overlay {
-    background-image: linear-gradient(to bottom right,#fcb045 20%,#fd1d1d 80%);
+    background: linear-gradient(to bottom right,#fcb045 20%,#fd1d1d 80%);
     opacity: 0.75;
 }
 .cz-row:nth-child(1) .cz-movie-genre:nth-child(2) .overlay,
 .cz-row:nth-child(2) .cz-movie-genre:nth-child(1) .overlay {
-    background-image: linear-gradient(to bottom right,#fd1d1d 20%,#E30073 70%);
+    background: linear-gradient(to bottom right,#fd1d1d 20%,#E30073 70%);
     opacity: 0.75;
 }
 .cz-row:nth-child(2) .cz-movie-genre:nth-child(2) .overlay,
 .cz-row:nth-child(3) .cz-movie-genre:nth-child(1) .overlay {
-    background-image: linear-gradient(to bottom right,#E30073 20%,#833ab4 70%);
+    background: linear-gradient(to bottom right,#E30073 20%,#833ab4 70%);
     opacity: 0.75;
 }
 
 .cz-row:nth-child(3) .cz-movie-genre:nth-child(2) .overlay,
 .cz-row:nth-child(4) .cz-movie-genre:nth-child(1) .overlay {
-    background-image: linear-gradient(to bottom right,#833ab4 20%,#1F2185 70%);
+    background: linear-gradient(to bottom right,#833ab4 20%,#1F2185 70%);
     opacity: 0.75;
 }
 
 .cz-row:nth-child(4) .cz-movie-genre:nth-child(2) .overlay {
-    background-image: linear-gradient(to bottom right,#1F2185 20%,#0083CC 70%);
+    background: linear-gradient(to bottom right,#1F2185 20%,#0083CC 70%);
     opacity: 0.75;
 }
 
-
+.cz-movie-genre .icon.ion-checkmark {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    padding: 8px;
+    font-size: 18px;
+}
+.cz-movie-genre.selected .overlay {
+    background-image: initial !important;
+    background-color: #1B998B !important;
+}

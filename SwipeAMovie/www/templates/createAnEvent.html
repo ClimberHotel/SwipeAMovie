@@ -6,7 +6,7 @@
                 <input type="text" name="title" ng-model="vm.entity.title"
                        placeholder="e.g. Mary's Star Wars marathon" required>
             </label>
-            
+
             <div class="cz-row" style="margin: -1px 0;">
                 <div style="width: 50%;">
                     <label class="item item-input item-stacked-label" ng-class="{ 'error': form.date.$dirty && form.date.$invalid }" style="margin: 0 -1px 0 0;">
@@ -33,7 +33,12 @@
 
     </ion-content>
 
+<<<<<<< HEAD
     <div class="cz-footer">
         <input class="button button-positive button-block" type="submit" form="form" ng-click="vm.submit()" value="Invite Friends" />
+=======
+    <div class="cz-footer ready">
+        <input class="button button-positive button-block" type="submit" form="form" value="Invite Friends" ng-click="test()"/>
+>>>>>>> 411e71a4d5fb223c90ef3d5000fefac1e2674c71
     </div>
 </ion-view>
