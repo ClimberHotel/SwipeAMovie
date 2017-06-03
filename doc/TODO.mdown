@@ -1,4 +1,12 @@
 # Validar no Ionic
 - fazer o share link via sistema
+  [Looks promissing - Tutorial ionic project with share links, native and internal](https://javebratt.com/social-sharing-with-ionic/)
+  [Social share](http://ngcordova.com/docs/plugins/socialSharing/)
+  [More social share](https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin)
+
 - manter o websocket
 - fazer a push notification
+
+
+- fazer link to our app
+  [How to share our link to open our app](https://stackoverflow.com/questions/38129730/how-to-share-a-link-within-ionic-app-that-links-back-to-the-app)
