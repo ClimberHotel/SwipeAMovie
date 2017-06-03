@@ -71,7 +71,11 @@ function ($scope, $state, $stateParams, $cordovaSocialSharing) {
                                 console.error("Oh Noes! Something went wrong in the server\n"+setupRoom.responseText);
                                 alert("Oh Noes! Something went wrong in the server");
                             } else {
-                                $scope.shareLink(roomID);
+                                //try {
+                                    $scope.shareLink(roomID);
+                                //} catch (e) {
+                                //    copy('http://192.168.0.101:8100/#/events/'+roomId+'/invitation');
+                                //}
                                 $state.go('votingGenres', {"userID": userID, "roomID": roomID});
                             }
                         }
