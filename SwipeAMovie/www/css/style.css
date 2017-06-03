@@ -1,1 +1,17 @@
 /* Empty. Add your own CSS if you like */
+
+.cz-row {
+    display: flex;
+}
+
+.cz-footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    padding: 0 10px;
+}
+
+/* Ionic customization */
+.item-stacked-label.error {
+    border: 1px solid red;
+}

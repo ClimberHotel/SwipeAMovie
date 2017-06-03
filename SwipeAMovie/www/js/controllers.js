@@ -4,6 +4,9 @@ angular.module('app.controllers', [])
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
+    var vm = this;
+
+    vm.entity = { date: new Date(), time: new Date(1970, 0, 0, 12, 34, 0, 0) };
 
 
 }])

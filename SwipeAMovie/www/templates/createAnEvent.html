@@ -1,23 +1,39 @@
 <ion-view title="Create an Event" id="page1">
-  <ion-content padding="true" scroll="false" class="has-header">
-    <form id="createAnEvent-form1" class="list">
-      <label class="item item-input item-stacked-label" id="createAnEvent-input1" name="title">
-        <span class="input-label">Title</span>
-        <input type="text" placeholder="e.g. Mary's Star Wars marathon">
-      </label>
-      <label class="item item-input item-stacked-label" id="createAnEvent-input8" name="description">
-        <span class="input-label">Description</span>
-        <input type="text" placeholder="(optional)">
-      </label>
-      <label class="item item-input item-stacked-label" id="createAnEvent-input3" name="date">
-        <span class="input-label">When</span>
-        <input type="date" placeholder="">
-      </label>
-      <label class="item item-input item-stacked-label" id="createAnEvent-input4" name="time">
-        <input type="time" placeholder="">
-      </label>
-    </form>
-    <div class="spacer" style="width: 300px; height: 144px;"></div>
-    <button id="createAnEvent-button7" class="button button-positive button-block">Invite Friends</button>
-  </ion-content>
+    <ion-content padding="true" scroll="false" class="has-header">
+        <form id="createAnEvent-form" name="form" class="list">
+            <label class="item item-input item-stacked-label" ng-class="{ 'error': form.title.$dirty && form.title.$invalid }">
+                <span class="input-label">Title&nbsp;<span style="color: red;">*</span></span>
+                <input type="text" name="title" ng-model="vm.entity.title"
+                       placeholder="e.g. Mary's Star Wars marathon" required>
+            </label>
+            
+            <div class="cz-row" style="margin: -1px 0;">
+                <div style="width: 50%;">
+                    <label class="item item-input item-stacked-label" ng-class="{ 'error': form.date.$dirty && form.date.$invalid }" style="margin: 0 -1px 0 0;">
+                        <span class="input-label">Date&nbsp;<span style="color: red;">*</span></span>
+                        <input type="date" name="date" ng-model="vm.entity.date"
+                            placeholder="" required>
+                    </label>
+                </div>
+                <div style="width: 50%;">
+                    <label class="item item-input item-stacked-label" ng-class="{ 'error': form.time.$dirty && form.time.$invalid }" style="margin: 0;">
+                        <span class="input-label">Time&nbsp;<span style="color: red;">*</span></span>
+                        <input type="time" name="time" ng-model="vm.entity.time"
+                               placeholder="12:00" required>
+                    </label>
+                </div>
+            </div>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Description</span>
+                <textarea name="description" ng-model="vm.entity.description" style="height: 125px;"
+                          placeholder="(optional)"></textarea>
+            </label>
+        </form>
+
+    </ion-content>
+
+    <div class="cz-footer">
+        <input class="button button-positive button-block" type="submit" id="createAnEvent-submit" form="form" value="Invite Friends" />
+    </div>
 </ion-view>
