@@ -161,16 +161,121 @@ function ($scope, $stateParams) {
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $state, $stateParams) {
     var vm = this;
+    var currentIndex = $stateParams['movieListIndex'];
+    if(currentIndex>=$stateParams['movieList']){
+        $state.go('resultsCountdownUser');
+    }
 
     
 
 }])
 
-.controller('votingMoviesDetailsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('votingMoviesDetailsCtrl', ['$scope', '$state', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $state, $stateParams) {
+    var vm = this;
+    var movie = $stateParams['movieList'][$stateParams['movieListIndex']];
+    vm.title = movie['title'];
+    vm.year = movie['year'];
+    vm.duration = movie['duration'];
+    vm.ratings = movie['ratings'];
+    vm.trailerUrl = movie['trailerUrl']
+    vm.synopsis = movie['synopsis']
 
+    vm.like = function(){
+        var like = new XMLHttpRequest();
+        like.open('POST', 'http://'+serverName+'/room/'+$stateParams['roomID'], true);
+        like.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        like.onload = function(){
+            try {
+                if (like.status < 200 && like.status >= 400) {
+                    console.error("Oh Noes! Something went wrong in the server\n"+like.responseText);
+                    alert("Oh Noes! Something went wrong in the server\n");
+                }else{
+                    $state.go('votingMoviesCtrl',{'movieList':$stateParams['movieList'],
+                    'movieListIndex':$stateParams['movieListIndex']+1,
+                    'userID':$stateParams['userID'],
+                    'roomID':$stateParams['roomID']
+                    });
+                }
+            }catch(e){
+                console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+                alert("Oh Noes! Something went wrong in the client\n");
+            }
+        };
+
+        like.onerror = function() {
+            console.error("Oh Noes! Something went wrong in the server\n"+like.responseText);
+            alert("Oh Noes! Something went wrong in the server\n");
+        };
+
+        like.send(JSON.stringify({ "movieId": movie['uid'],
+            "userId": $stateParams['userID'],
+            "isLike":"True"
+        }, null, 4));
+    };
+
+    vm.dislike = function(){
+        var dislike = new XMLHttpRequest();
+        dislike.open('POST', 'http://'+serverName+'/room/'+$stateParams['roomID'], true);
+        dislike.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        dislike.onload = function(){
+            try {
+                if (dislike.status < 200 && dislike.status >= 400) {
+                    console.error("Oh Noes! Something went wrong in the server\n"+dislike.responseText);
+                    alert("Oh Noes! Something went wrong in the server\n");
+                }else{
+                    $state.go('votingMoviesCtrl',{'movieList':$stateParams['movieList'],
+                    'movieListIndex':$stateParams['movieListIndex']+1,
+                    'userID':$stateParams['userID'],
+                    'roomID':$stateParams['roomID']
+                    });
+                }
+            }catch(e){
+                console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+                alert("Oh Noes! Something went wrong in the client\n");
+            }
+        };
+
+        dislike.onerror = function() {
+            console.error("Oh Noes! Something went wrong in the server\n"+dislike.responseText);
+            alert("Oh Noes! Something went wrong in the server\n");
+        };
+
+        dislike.send(JSON.stringify({ "movieId": movie['uid'],
+            "userId": $stateParams['userID'],
+            "isLike":"False"
+        }, null, 4));
+    };
+
+    vm.finish = function(){
+        var finish = new XMLHttpRequest();
+        finish.open('POST', 'http://'+serverName+'/finished/', true);
+        finish.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        finish.onload = function(){
+            try {
+                if (finish.status < 200 && finish.status >= 400) {
+                    console.error("Oh Noes! Something went wrong in the server\n"+finish.responseText);
+                    alert("Oh Noes! Something went wrong in the server\n");
+                }else{
+                    $state.go('resultsCountdownUser');
+                }
+            }catch(e){
+                console.error("Oh Noes! Something went wrong in the client\n"+e.error);
+                alert("Oh Noes! Something went wrong in the client\n");
+            }
+        };
+
+        finish.onerror = function() {
+            console.error("Oh Noes! Something went wrong in the server\n"+finish.responseText);
+            alert("Oh Noes! Something went wrong in the server\n");
+        };
+
+        finish.send(JSON.stringify({ "roomId": $stateParams['roomID'],
+            "userId": $stateParams['userID']
+        }, null, 4));
+    };
 
 }])
 
@@ -231,7 +336,7 @@ function ($scope, $stateParams) {
 
         movieList.sort(function(a,b){return 0.5 - Math.random()});
 
-        $state.go('votingMovies',{"movieList":movieList, "userID":$stateParams['userID'], "roomID":$stateParams['roomID']})
+        $state.go('votingMovies',{"movieList":movieList, "movieListIndex":0, "userID":$stateParams['userID'], "roomID":$stateParams['roomID']})
     }
 
 }])
